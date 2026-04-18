@@ -20,6 +20,8 @@
     "vue-router": "^5.0.4"
   },
   "devDependencies": {
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
     "@nuxt/test-utils": "^4.0.2",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/vite": "^4.2.2",
