@@ -1,6 +1,6 @@
 name = "digitalseraph"
 compatibility_date = "2026-04-18"
-pages_build_output_dir = ".output/public"
+pages_build_output_dir = "dist"
 
 [vars]
 SITE_URL = "https://digitalseraph.com"
