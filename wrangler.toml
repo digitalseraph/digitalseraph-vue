@@ -1,4 +1,4 @@
-name = "digitalseraph"
+name = "digitalseraph-vue"
 compatibility_date = "2026-04-18"
 pages_build_output_dir = "dist"
 
