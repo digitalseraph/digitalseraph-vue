@@ -1,75 +1,57 @@
-# Nuxt Minimal Starter
+# digitalseraph-vue
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Personal site for David Miller — digitalseraph.com.
 
-## Setup
+## Stack
 
-Make sure to install dependencies:
+Nuxt (latest), Vue 3, TypeScript strict, Tailwind v4, Pinia, @nuxt/content, Motion.
+
+## Develop
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Opens at http://localhost:3000.
 
-Build the application for production:
+## Build
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+pnpm generate   # static output in .output/public
 ```
 
-Locally preview production build:
+## Deploy (Cloudflare Pages)
+
+The production site deploys from `main` via the Cloudflare Pages integration.
+To deploy from CLI:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+pnpm generate
+pnpm dlx wrangler pages deploy .output/public --project-name digitalseraph
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## One-time Cloudflare Pages setup (manual)
+
+In the Cloudflare dashboard:
+1. Pages → Create project → Connect to Git → pick the `digitalseraph` repo.
+2. Set build command: `cd web/digitalseraph-vue && pnpm install && pnpm generate`
+3. Set build output directory: `web/digitalseraph-vue/.output/public`
+4. Set root directory: repo root.
+5. Framework preset: Nuxt (static).
+
+Then in Custom Domains, add `digitalseraph.com` and `www.digitalseraph.com`.
+
+## Content
+
+- `content/about.md` — About page copy
+- `content/resume.yml` — Résumé data
+- `content/work/*.md` — Project case studies
+- `content/writing/*.md` — Blog posts
+
+## Tests
+
+```bash
+pnpm test:unit   # vitest
+pnpm test:e2e    # playwright (see tests/e2e)
+```
