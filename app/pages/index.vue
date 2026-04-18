@@ -1,6 +1,20 @@
+<script setup lang="ts">
+import HeroTerminal from "~/components/landing/HeroTerminal.vue";
+import AboutTeaser from "~/components/landing/AboutTeaser.vue";
+import FeaturedWork from "~/components/landing/FeaturedWork.vue";
+import WritingTeaser from "~/components/landing/WritingTeaser.vue";
+import ContactCta from "~/components/landing/ContactCta.vue";
+
+useHead({
+  title: "David Miller — digitalseraph.com",
+  meta: [{ name: "description", content: "Engineer, builder, and occasional writer. Selected work, writing, and contact." }],
+});
+</script>
+
 <template>
-  <section class="max-w-[1280px] mx-auto px-8 py-24">
-    <h1 class="text-[var(--text-display-l)] font-display font-semibold">index</h1>
-    <p class="text-[var(--text-muted)]">landing page lands in Task 25.</p>
-  </section>
+  <HeroTerminal />
+  <AboutTeaser />
+  <FeaturedWork />
+  <WritingTeaser />
+  <ContactCta />
 </template>
