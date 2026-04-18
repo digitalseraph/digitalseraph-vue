@@ -1,0 +1,50 @@
+header:
+  name: David Miller
+  role: Engineer · Builder · Maker
+  location: Remote
+  email: hello@digitalseraph.com
+experience:
+  - role: Senior Software Engineer
+    company: Placeholder Co
+    start: 2023-01
+    end: present
+    domains: [leadership, systems]
+    bullets:
+      - Led migration from monolith to services across 40-engineer org
+      - Drove observability platform adoption; pages reduced 60%
+      - Mentored four engineers from mid to senior
+  - role: Staff Engineer
+    company: Studio Null
+    start: 2020-03
+    end: 2022-12
+    domains: [leadership, frontend]
+    bullets:
+      - Shipped five product areas from zero to revenue
+      - Authored team's design-system and contribution guide
+  - role: Lead Engineer
+    company: Lumen Labs
+    start: 2018-06
+    end: 2020-02
+    domains: [systems, ml]
+    bullets:
+      - Built ingestion pipeline handling 3B events/day
+      - First production deployment of in-house ML inference service
+education:
+  - school: University
+    degree: B.S. Computer Science
+    year: 2012
+skills:
+  - group: Languages
+    items: [TypeScript, Rust, Go, Python, Elixir]
+  - group: Platforms
+    items: [AWS, Cloudflare, Kubernetes, Postgres, Redis]
+  - group: Frontend
+    items: [Vue, React, Tailwind, Motion]
+principles:
+  - Ship the thing. Then make it beautiful.
+  - The cheapest system is the one you understand.
+  - Earn the right to abstract.
+contact:
+  email: hello@digitalseraph.com
+  github: digitalseraph
+  linkedin: davidmiller
