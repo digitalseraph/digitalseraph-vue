@@ -18,7 +18,7 @@ Opens at http://localhost:3000.
 ## Build
 
 ```bash
-pnpm generate   # static output in .output/public
+pnpm generate   # static output in dist/ (cloudflare-pages nitro preset)
 ```
 
 ## Deploy (Cloudflare Pages)
@@ -28,7 +28,7 @@ To deploy from CLI:
 
 ```bash
 pnpm generate
-pnpm dlx wrangler pages deploy .output/public --project-name digitalseraph
+pnpm dlx wrangler pages deploy dist --project-name digitalseraph
 ```
 
 ## One-time Cloudflare Pages setup (manual)
@@ -36,7 +36,7 @@ pnpm dlx wrangler pages deploy .output/public --project-name digitalseraph
 In the Cloudflare dashboard:
 1. Pages → Create project → Connect to Git → pick the `digitalseraph` repo.
 2. Set build command: `cd web/digitalseraph-vue && pnpm install && pnpm generate`
-3. Set build output directory: `web/digitalseraph-vue/.output/public`
+3. Set build output directory: `web/digitalseraph-vue/dist`
 4. Set root directory: repo root.
 5. Framework preset: Nuxt (static).
 
