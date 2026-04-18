@@ -39,13 +39,30 @@ watch(
 
 function onKey(e: KeyboardEvent) {
   if (e.key === "Escape") emit("close");
-  if (e.key === "ArrowDown") { e.preventDefault(); selected.value = (selected.value + 1) % filtered.value.length; }
-  if (e.key === "ArrowUp") { e.preventDefault(); selected.value = (selected.value - 1 + filtered.value.length) % filtered.value.length; }
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    if (filtered.value.length === 0) return;
+    selected.value = (selected.value + 1) % filtered.value.length;
+  }
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+    if (filtered.value.length === 0) return;
+    selected.value = (selected.value - 1 + filtered.value.length) % filtered.value.length;
+  }
   if (e.key === "Enter") {
     const pick = filtered.value[selected.value];
     if (pick) { router.push(pick.path); emit("close"); }
   }
 }
+
+watch(filtered, (list) => {
+  if (list.length === 0) {
+    selected.value = 0;
+    return;
+  }
+  if (selected.value >= list.length) selected.value = list.length - 1;
+  if (selected.value < 0) selected.value = 0;
+});
 </script>
 
 <template>
