@@ -18,27 +18,30 @@ Opens at http://localhost:3000.
 ## Build
 
 ```bash
-pnpm generate   # static output in dist/ (cloudflare-pages nitro preset)
+pnpm generate   # static output in .output/public
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers + Static Assets)
 
-The production site deploys from `main` via the Cloudflare Pages integration.
+The production site deploys from `master` via the Cloudflare Workers integration.
 To deploy from CLI:
 
 ```bash
 pnpm generate
-pnpm dlx wrangler pages deploy dist --project-name digitalseraph
+pnpm dlx wrangler deploy
 ```
 
-## One-time Cloudflare Pages setup (manual)
+`wrangler.toml` declares `[assets] directory = "./.output/public"` so a static
+worker is provisioned that serves the prerendered site directly — no Worker
+script required.
+
+## One-time Cloudflare setup (manual)
 
 In the Cloudflare dashboard:
-1. Pages → Create project → Connect to Git → pick the `digitalseraph` repo.
-2. Set build command: `cd web/digitalseraph-vue && pnpm install && pnpm generate`
-3. Set build output directory: `web/digitalseraph-vue/dist`
-4. Set root directory: repo root.
-5. Framework preset: Nuxt (static).
+1. Workers → Create application → Connect to Git → pick the `digitalseraph-vue` repo.
+2. Build command: `pnpm install && pnpm generate`
+3. Deploy command: `pnpm dlx wrangler deploy` (or leave blank to use `wrangler.toml`).
+4. Root directory: repo root (no sub-path).
 
 Then in Custom Domains, add `digitalseraph.com` and `www.digitalseraph.com`.
 
