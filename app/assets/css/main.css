@@ -1,5 +1,5 @@
 @import "tailwindcss";
-/* @import "./tokens.css"; */  /* wired in Task 4 */
+@import "./tokens.css";
 
 html, body, #__nuxt { height: 100%; }
 body {
