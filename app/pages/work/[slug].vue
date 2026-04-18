@@ -4,6 +4,9 @@ const slug = route.params.slug as string;
 const { data: project } = await useAsyncData(`work-${slug}`, () =>
   queryCollection("work").where("stem", "=", `work/${slug}`).first()
 );
+if (!project.value) {
+  throw createError({ statusCode: 404, statusMessage: "Project not found", fatal: true });
+}
 useHead(() => ({ title: project.value ? `${project.value.title} — digitalseraph` : "digitalseraph" }));
 </script>
 

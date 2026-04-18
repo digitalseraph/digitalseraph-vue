@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "./tokens.css";
 
 html, body, #__nuxt { height: 100%; }

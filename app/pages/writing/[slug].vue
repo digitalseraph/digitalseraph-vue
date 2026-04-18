@@ -5,6 +5,9 @@ const slug = route.params.slug as string;
 const { data: post } = await useAsyncData(`post-${slug}`, () =>
   queryCollection("writing").where("stem", "=", `writing/${slug}`).first()
 );
+if (!post.value) {
+  throw createError({ statusCode: 404, statusMessage: "Post not found", fatal: true });
+}
 useHead(() => ({ title: post.value ? `${post.value.title} — digitalseraph` : "digitalseraph" }));
 
 const formatted = computed(() =>
