@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-      - run: corepack enable
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:unit
 
@@ -29,11 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-      - run: corepack enable
       - run: pnpm install --frozen-lockfile
       - run: pnpm dlx playwright install --with-deps chromium
       - run: pnpm test:e2e
@@ -43,11 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-      - run: corepack enable
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
       - uses: actions/upload-artifact@v4
@@ -62,11 +62,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-      - run: corepack enable
       - run: pnpm install --frozen-lockfile
       - uses: actions/download-artifact@v4
         with:
