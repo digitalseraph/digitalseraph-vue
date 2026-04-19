@@ -24,6 +24,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      htmlAttrs: { lang: "en" },
       title: "digitalseraph",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
