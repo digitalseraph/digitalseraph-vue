@@ -15,9 +15,9 @@ jobs:
     name: Unit + component tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -28,9 +28,9 @@ jobs:
     name: Playwright E2E
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -42,15 +42,25 @@ jobs:
     name: Static build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
-      - uses: actions/upload-artifact@v4
+      - name: Check bundle size
+        run: |
+          SIZE=$(du -sb .output/public | cut -f1)
+          BUDGET=3145728   # 3 MiB
+          printf 'Bundle size: %s bytes\n' "$SIZE"
+          printf 'Budget:      %s bytes (3 MiB)\n' "$BUDGET"
+          if [ "$SIZE" -gt "$BUDGET" ]; then
+            echo "::error::Bundle size $SIZE bytes exceeds budget $BUDGET bytes"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v5
         with:
           name: static-output
           path: .output/public
@@ -61,14 +71,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: static-output
           path: .output/public
