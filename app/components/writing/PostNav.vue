@@ -18,7 +18,7 @@ defineProps<{
       :to="`/writing/${prev.slug}`"
       class="group min-w-0 max-w-[48%] truncate text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
     >
-      <span class="text-[var(--text-dim)]">← previous ·</span>
+      <span class="text-[var(--text-dim)]"><span aria-hidden="true">← </span>previous ·</span>
       <span class="ml-1">{{ prev.title }}</span>
     </NuxtLink>
     <span v-else class="flex-1"></span>
@@ -29,7 +29,7 @@ defineProps<{
       class="group min-w-0 max-w-[48%] truncate text-right text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
     >
       <span>{{ next.title }}</span>
-      <span class="text-[var(--text-dim)] ml-1">· next →</span>
+      <span class="text-[var(--text-dim)] ml-1">· next<span aria-hidden="true"> →</span></span>
     </NuxtLink>
     <span v-else class="flex-1"></span>
   </nav>

@@ -52,7 +52,7 @@
 
 /* Code block wrapper: 1px border, rounded corners, top accent gradient bar */
 .prose pre {
-  background: #0a0a0a;
+  background: var(--code-bg);
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 18px 20px;

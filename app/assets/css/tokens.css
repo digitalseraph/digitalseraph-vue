@@ -8,6 +8,7 @@
   --color-accent: #22c55e;
   --color-accent-glow: rgba(34, 197, 94, 0.35);
   --color-grid-line: rgba(255, 255, 255, 0.04);
+  --color-code-bg: #0a0a0a;
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -36,6 +37,9 @@
   --accent: var(--color-accent);
   --accent-glow: var(--color-accent-glow);
   --grid-line: var(--color-grid-line);
+  /* Code block background — intentionally always dark regardless of theme,
+     until a matching light Shiki theme ships. */
+  --code-bg: var(--color-code-bg);
   color-scheme: dark;
 }
 
