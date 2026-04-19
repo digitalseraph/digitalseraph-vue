@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CopyInline from "~/components/primitives/CopyInline.vue";
-const resume = await useResume();
+const resume = useResume();
 const contact = computed(() => resume.value?.contact);
 </script>
 

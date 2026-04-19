@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const resume = await useResume();
+const resume = useResume();
 const education = computed(() => resume.value?.education ?? []);
 const certs = computed(() => resume.value?.certifications ?? []);
 

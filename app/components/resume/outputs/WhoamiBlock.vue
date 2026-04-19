@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const resume = await useResume();
+const resume = useResume();
 const header = computed(() => resume.value?.header);
 </script>
 
