@@ -3,7 +3,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useThemeStore } from "~/stores/theme";
 
 const theme = useThemeStore();
-const emit = defineEmits<{ (e: "open-palette"): void }>();
+const emit = defineEmits<{ (e: "toggle-palette"): void }>();
 
 const hidden = ref(false);
 let lastY = 0;
@@ -47,7 +47,7 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
           type="button"
           class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
           aria-label="Open command palette (⌘K)"
-          @click="emit('open-palette')"
+          @click="emit('toggle-palette')"
         >⌘K</button>
         <button
           type="button"
