@@ -29,7 +29,7 @@ export default defineContentConfig({
       source: "writing/*.md",
       schema: z.object({
         title: z.string(),
-        date: z.string(),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "date must be YYYY-MM-DD"),
         tags: z.array(z.string()).default([]),
         excerpt: z.string(),
         draft: z.boolean().default(false),
@@ -69,7 +69,7 @@ export default defineContentConfig({
         certifications: z.array(z.object({
           name: z.string(),
           code: z.string().optional(),
-          issued: z.string(),
+          issued: z.string().regex(/^\d{4}-\d{2}(-\d{2})?$/, "issued must be YYYY-MM or YYYY-MM-DD"),
         })),
         skills: z.array(z.object({
           group: z.string(),
