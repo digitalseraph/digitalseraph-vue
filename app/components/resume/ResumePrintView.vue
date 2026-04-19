@@ -1,14 +1,8 @@
 <script setup lang="ts">
+import { fmtDatePrint } from "~/utils/resumeDate";
+
 const resume = useResume();
 const r = computed(() => resume.value);
-
-function fmtDate(d: string): string {
-  if (d === "present") return "Present";
-  const [y, m] = d.split("-");
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const mi = parseInt(m, 10) - 1;
-  return `${months[mi] ?? m} ${y}`;
-}
 
 function today(): string {
   return new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
@@ -43,7 +37,7 @@ function today(): string {
       <div v-for="(role, i) in r.experience" :key="i" class="role">
         <div class="role-header">
           <strong>{{ role.role }}</strong>
-          <span class="dates">{{ fmtDate(role.start) }} – {{ fmtDate(role.end) }}</span>
+          <span class="dates">{{ fmtDatePrint(role.start) }} – {{ fmtDatePrint(role.end) }}</span>
         </div>
         <div class="role-meta"><em>{{ role.company }} — {{ role.location }}</em></div>
         <ul>
@@ -64,7 +58,7 @@ function today(): string {
     <section v-if="r.certifications.length" class="certifications">
       <h2>Certifications</h2>
       <div v-for="(c, i) in r.certifications" :key="i">
-        {{ c.name }}<span v-if="c.code"> — {{ c.code }}</span> · Issued {{ fmtDate(c.issued) }}
+        {{ c.name }}<span v-if="c.code"> — {{ c.code }}</span> · Issued {{ fmtDatePrint(c.issued) }}
       </div>
     </section>
 

@@ -1,14 +1,9 @@
 <script setup lang="ts">
+import { fmtDate } from "~/utils/resumeDate";
+
 const resume = useResume();
 const education = computed(() => resume.value?.education ?? []);
 const certs = computed(() => resume.value?.certifications ?? []);
-
-function fmtYearMonth(d: string): string {
-  const [y, m] = d.split("-");
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const mi = parseInt(m, 10) - 1;
-  return `${months[mi] ?? m} ${y}`;
-}
 </script>
 
 <template>
@@ -25,7 +20,7 @@ function fmtYearMonth(d: string): string {
       <div v-for="(cert, i) in certs" :key="i" class="text-[var(--text-muted)]">
         <span class="text-[var(--text)]">{{ cert.name }}</span>
         <span v-if="cert.code"> — {{ cert.code }}</span>
-        <span class="text-[var(--text-dim)]"> · issued {{ fmtYearMonth(cert.issued) }}</span>
+        <span class="text-[var(--text-dim)]"> · issued {{ fmtDate(cert.issued) }}</span>
       </div>
     </div>
   </div>
