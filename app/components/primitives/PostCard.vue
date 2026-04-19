@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { fmtPostDate } from "~/utils/postDate";
+
 const props = defineProps<{
   slug: string;
   title: string;
@@ -7,7 +9,7 @@ const props = defineProps<{
   tags?: string[];
 }>();
 
-const formatted = new Date(props.date).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+const formatted = fmtPostDate(props.date);
 </script>
 
 <template>
