@@ -22,7 +22,7 @@ const { transform: foregroundTransform } = useParallax({ speed: 1.2, reduced });
         david <span class="italic text-[var(--accent)]">miller</span>
       </h1>
       <div class="mt-6 font-mono text-[var(--text-mono)] text-[var(--text-muted)] tracking-[0.2em] uppercase" :style="{ transform: foregroundTransform }">
-        Software · Systems · Shipping
+        Full-Stack · Cloud · DevOps
       </div>
     </div>
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[var(--text-mono)] text-[var(--text-dim)] tracking-[0.2em] uppercase">
