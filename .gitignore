@@ -27,3 +27,6 @@ logs
 test-results
 playwright-report
 playwright/.cache
+
+# Brainstorming session artifacts
+.superpowers/
