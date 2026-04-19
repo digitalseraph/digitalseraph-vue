@@ -1,0 +1,31 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": ".output/public",
+      "url": [
+        "http://localhost/",
+        "http://localhost/about",
+        "http://localhost/writing",
+        "http://localhost/contact",
+        "http://localhost/writing/2026-03-12-first-post"
+      ],
+      "settings": {
+        "emulatedFormFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "onlyCategories": ["performance", "accessibility", "best-practices", "seo"]
+      },
+      "numberOfRuns": 1
+    },
+    "assert": {
+      "assertions": {
+        "categories:accessibility":  ["error", { "minScore": 1.0 }],
+        "categories:performance":    ["warn",  { "minScore": 0.90 }],
+        "categories:best-practices": ["warn",  { "minScore": 0.95 }],
+        "categories:seo":            ["warn",  { "minScore": 0.95 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
