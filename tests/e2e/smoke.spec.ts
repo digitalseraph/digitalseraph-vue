@@ -42,8 +42,8 @@ test("writing index lists seeded posts", async ({ page }) => {
 });
 
 test("work detail page renders", async ({ page }) => {
-  await page.goto("/work/01-project-one");
-  await expect(page.getByRole("heading", { name: "Project One" })).toBeVisible();
+  await page.goto("/work/01-jump");
+  await expect(page.getByRole("heading", { name: "Jump" })).toBeVisible();
 });
 
 test("writing post renders meta, prose, and nav", async ({ page }) => {
