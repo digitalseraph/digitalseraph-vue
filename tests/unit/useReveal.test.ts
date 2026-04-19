@@ -31,4 +31,17 @@ describe("useReveal", () => {
     MockIO.instances[MockIO.instances.length - 1].fire(true, el);
     expect(visible.value).toBe(true);
   });
+
+  it("when once is false, flips visible back to false on exit", async () => {
+    vi.stubGlobal("IntersectionObserver", MockIO);
+    const el = document.createElement("div");
+    const target = ref<HTMLElement | null>(el);
+    const { visible } = useReveal(target, { once: false });
+    await nextTick();
+    const observer = MockIO.instances[MockIO.instances.length - 1];
+    observer.fire(true, el);
+    expect(visible.value).toBe(true);
+    observer.fire(false, el);
+    expect(visible.value).toBe(false);
+  });
 });

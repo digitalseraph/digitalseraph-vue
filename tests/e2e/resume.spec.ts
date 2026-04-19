@@ -32,7 +32,9 @@ test.describe("résumé terminal", () => {
 
   test("typing a command + Enter appends a buffer entry", async ({ page }) => {
     await page.goto("/resume");
-    await page.waitForTimeout(1200);
+    // Wait for the intro whoami to finish so typeInto has released the input
+    // (fixed waits flake on slower CI hardware).
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
     const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
     await input.fill("contact");
     await input.press("Enter");
