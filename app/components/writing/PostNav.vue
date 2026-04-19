@@ -1,0 +1,36 @@
+<script setup lang="ts">
+import type { PostRef } from "~/types/postNav";
+
+defineProps<{
+  prev?: PostRef | null;
+  next?: PostRef | null;
+}>();
+</script>
+
+<template>
+  <nav
+    v-if="prev || next"
+    aria-label="Post navigation"
+    class="pt-6 border-t border-[var(--line)] flex items-center justify-between gap-6 font-mono text-[var(--text-mono)]"
+  >
+    <NuxtLink
+      v-if="prev"
+      :to="`/writing/${prev.slug}`"
+      class="group min-w-0 max-w-[48%] truncate text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+    >
+      <span class="text-[var(--text-dim)]">← previous ·</span>
+      <span class="ml-1">{{ prev.title }}</span>
+    </NuxtLink>
+    <span v-else class="flex-1"></span>
+
+    <NuxtLink
+      v-if="next"
+      :to="`/writing/${next.slug}`"
+      class="group min-w-0 max-w-[48%] truncate text-right text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+    >
+      <span>{{ next.title }}</span>
+      <span class="text-[var(--text-dim)] ml-1">· next →</span>
+    </NuxtLink>
+    <span v-else class="flex-1"></span>
+  </nav>
+</template>
