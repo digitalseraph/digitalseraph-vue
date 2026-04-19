@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const resume = await useResume();
+const resume = useResume();
 const experience = computed(() => resume.value?.experience ?? []);
 
 function fmtDate(d: string): string {
