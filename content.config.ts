@@ -35,5 +35,52 @@ export default defineContentConfig({
         draft: z.boolean().default(false),
       }),
     }),
+    resume: defineCollection({
+      type: "data",
+      source: "resume.yml",
+      schema: z.object({
+        header: z.object({
+          name: z.string(),
+          title: z.string(),
+          subtitle: z.string().optional(),
+          location: z.string(),
+          email: z.string(),
+          github: z.string(),
+          linkedin: z.string(),
+        }),
+        summary: z.string(),
+        experience: z.array(z.object({
+          role: z.string(),
+          company: z.string(),
+          location: z.string(),
+          start: z.string(),
+          end: z.string(),
+          bullets: z.array(z.string()),
+          tech: z.array(z.string()),
+          freelance: z.boolean().optional(),
+        })),
+        education: z.array(z.object({
+          school: z.string(),
+          location: z.string(),
+          degree: z.string(),
+          field: z.string().optional(),
+          year: z.number(),
+        })),
+        certifications: z.array(z.object({
+          name: z.string(),
+          code: z.string().optional(),
+          issued: z.string(),
+        })),
+        skills: z.array(z.object({
+          group: z.string(),
+          items: z.array(z.string()),
+        })),
+        contact: z.object({
+          email: z.string(),
+          github: z.string(),
+          linkedin: z.string(),
+        }),
+      }),
+    }),
   },
 });
