@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     highlight: false,
     // Node 22+ has a built-in sqlite module; use it so @nuxt/content
     // does not require the optional better-sqlite3 native dep.
-    experimental: { nativeSqlite: true },
+    experimental: { sqliteConnector: "native" },
   },
 
   nitro: {

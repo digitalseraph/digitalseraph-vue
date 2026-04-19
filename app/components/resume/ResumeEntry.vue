@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import type { Component } from "vue";
 import WhoamiBlock from "./outputs/WhoamiBlock.vue";
 import ExperienceList from "./outputs/ExperienceList.vue";
 import SkillsGrid from "./outputs/SkillsGrid.vue";
 import EducationBlock from "./outputs/EducationBlock.vue";
 import ContactBlock from "./outputs/ContactBlock.vue";
 import HelpBlock from "./outputs/HelpBlock.vue";
-import type { OutputEntry } from "~/utils/resumeDispatcher";
+import type { OutputComponentName, OutputEntry } from "~/utils/resumeDispatcher";
 
 const props = defineProps<{
   input: string;
   output: OutputEntry;
 }>();
 
-const outputMap: Record<string, any> = {
+const outputMap: Record<OutputComponentName, Component> = {
   WhoamiBlock,
   ExperienceList,
   SkillsGrid,
