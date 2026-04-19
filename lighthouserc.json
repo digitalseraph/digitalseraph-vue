@@ -7,6 +7,7 @@
         "http://localhost/about",
         "http://localhost/writing",
         "http://localhost/contact",
+        "http://localhost/resume",
         "http://localhost/writing/2026-03-12-first-post"
       ],
       "settings": {
