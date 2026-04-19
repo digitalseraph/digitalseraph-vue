@@ -1,0 +1,83 @@
+/* Token-driven overrides for @tailwindcss/typography.
+   Keeps all prose colors on the site's design-token system so the
+   light theme (when enabled) works for free. */
+
+@layer utilities {
+  .prose {
+    --tw-prose-body:          var(--text-muted);
+    --tw-prose-headings:      var(--text);
+    --tw-prose-lead:          var(--text);
+    --tw-prose-links:         var(--accent);
+    --tw-prose-bold:          var(--text);
+    --tw-prose-counters:      var(--text-dim);
+    --tw-prose-bullets:       var(--text-dim);
+    --tw-prose-hr:            var(--line);
+    --tw-prose-quotes:        var(--text);
+    --tw-prose-quote-borders: var(--accent);
+    --tw-prose-captions:      var(--text-dim);
+    --tw-prose-code:          var(--text);
+    --tw-prose-pre-code:      var(--text);
+    --tw-prose-pre-bg:        transparent;
+    --tw-prose-th-borders:    var(--line);
+    --tw-prose-td-borders:    var(--line);
+  }
+}
+
+/* Links: 1px underline, accent color at 60% opacity, solidifies on hover */
+.prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  transition: text-decoration-color 120ms ease;
+}
+.prose a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* Inline code: mono, subtle bg, 1px border, kills Tailwind's default backticks */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--canvas-raised);
+  color: var(--text);
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+
+/* Code block wrapper: 1px border, rounded corners, top accent gradient bar */
+.prose pre {
+  background: #0a0a0a;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 18px 20px;
+  position: relative;
+  overflow-x: auto;
+}
+.prose pre::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 70%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Blockquote — accent left border + italic */
+.prose blockquote {
+  border-left-color: var(--accent);
+  font-style: italic;
+  color: var(--text-muted);
+}
