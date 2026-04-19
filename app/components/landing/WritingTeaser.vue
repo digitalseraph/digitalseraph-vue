@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import SectionReveal from "~/components/primitives/SectionReveal.vue";
 import PostCard from "~/components/primitives/PostCard.vue";
+import { stemToSlug } from "~/utils/slug";
 
 const { data: posts } = await useAsyncData("writing-teaser", () =>
   queryCollection("writing").where("draft", "=", false).order("date", "DESC").limit(3).all()
 );
-
-function slugOf(stem: string) {
-  return stem.split('/').pop() ?? '';
-}
 </script>
 
 <template>
@@ -24,7 +21,7 @@ function slugOf(stem: string) {
       <PostCard
         v-for="p in posts ?? []"
         :key="p.id"
-        :slug="slugOf(p.stem)"
+        :slug="stemToSlug(p.stem)"
         :title="p.title"
         :date="p.date"
         :excerpt="p.excerpt"

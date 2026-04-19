@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import ProjectCard from "~/components/primitives/ProjectCard.vue";
+import { stemToSlug } from "~/utils/slug";
 
 const { data: projects } = await useAsyncData("all-work", () =>
   queryCollection("work").order("year", "DESC").all()
 );
-
-function slugOf(stem: string) {
-  return stem.split('/').pop() ?? '';
-}
 
 useHead({ title: "Work — digitalseraph" });
 </script>
@@ -19,7 +16,7 @@ useHead({ title: "Work — digitalseraph" });
       <ProjectCard
         v-for="p in projects ?? []"
         :key="p.id"
-        :slug="slugOf(p.stem)"
+        :slug="stemToSlug(p.stem)"
         :title="p.title"
         :year="p.year"
         :role="p.role"

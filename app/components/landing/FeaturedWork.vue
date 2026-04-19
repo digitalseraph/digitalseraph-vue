@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import SectionReveal from "~/components/primitives/SectionReveal.vue";
 import ProjectCard from "~/components/primitives/ProjectCard.vue";
+import { stemToSlug } from "~/utils/slug";
 
 const { data: projects } = await useAsyncData("featured-work", () =>
   queryCollection("work").where("featured", "=", true).order("year", "DESC").all()
 );
-
-function slugOf(stem: string) {
-  return stem.split('/').pop() ?? '';
-}
 </script>
 
 <template>
@@ -24,7 +21,7 @@ function slugOf(stem: string) {
       <ProjectCard
         v-for="p in projects ?? []"
         :key="p.id"
-        :slug="slugOf(p.stem)"
+        :slug="stemToSlug(p.stem)"
         :title="p.title"
         :year="p.year"
         :role="p.role"
