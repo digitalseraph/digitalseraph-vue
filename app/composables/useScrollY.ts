@@ -30,6 +30,9 @@ export function __resetScrollY() {
   if (typeof window !== "undefined" && listening) {
     window.removeEventListener("scroll", onScroll);
   }
+  if (rafId) {
+    cancelAnimationFrame(rafId);
+  }
   singleton = null;
   rafId = 0;
   listening = false;
