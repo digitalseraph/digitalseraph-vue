@@ -1,14 +1,8 @@
 <script setup lang="ts">
+import { fmtDate } from "~/utils/resumeDate";
+
 const resume = useResume();
 const experience = computed(() => resume.value?.experience ?? []);
-
-function fmtDate(d: string): string {
-  if (d === "present") return "present";
-  const [y, m] = d.split("-");
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const mi = parseInt(m, 10) - 1;
-  return `${months[mi] ?? m} ${y}`;
-}
 </script>
 
 <template>
