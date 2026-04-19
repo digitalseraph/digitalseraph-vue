@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
+import { ref, watch, nextTick } from "vue";
 import { storeToRefs } from "pinia";
 import { useMotionStore } from "~/stores/motion";
 import { dispatchCommand, type OutputEntry } from "~/utils/resumeDispatcher";
@@ -20,7 +20,6 @@ interface BufferEntry {
 
 const buffer = ref<BufferEntry[]>([]);
 const input = ref("");
-const isStreaming = ref(false);
 const promptRef = ref<InstanceType<typeof ResumePrompt> | null>(null);
 
 let entryCounter = 0;
@@ -43,9 +42,6 @@ async function typeInto(text: string, speed = 45) {
 
 async function runCommand(cmd: string) {
   if (!resume.value) return;
-  if (isStreaming.value) {
-    isStreaming.value = false;
-  }
 
   const raw = cmd.trim();
   if (!raw) return;
@@ -74,9 +70,17 @@ async function runIntro() {
   await runCommand(introCmd);
 }
 
-onMounted(() => {
-  runIntro();
-});
+const introRan = ref(false);
+watch(
+  resume,
+  (r) => {
+    if (r && !introRan.value) {
+      introRan.value = true;
+      runIntro();
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
