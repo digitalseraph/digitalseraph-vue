@@ -1,50 +1,164 @@
 header:
   name: David Miller
-  role: Engineer · Builder · Maker
-  location: Remote
+  title: Senior Software Engineer III
+  subtitle: Full-Stack Developer
+  location: Marietta, GA (Remote)
   email: hello@digitalseraph.com
+  github: digitalseraph
+  linkedin: davidthedeveloper
+
+summary: >-
+  Results-driven Senior Full-Stack Engineer with 10+ years of experience building
+  scalable web applications, RESTful APIs, and cloud infrastructure across
+  healthcare, fintech, e-commerce, and media. Expert in PHP/Laravel, Vue.js,
+  TypeScript, React, and AWS, with deep expertise in DevOps, Docker, CI/CD
+  pipelines, and Agile/Scrum. HIPAA-certified with proven healthcare compliance
+  experience. Track record of delivering measurable cost savings, process
+  automation, and architectural improvements. Currently seeking remote Senior
+  Software Engineer roles where technical depth and cross-functional leadership
+  create meaningful business impact.
+
 experience:
-  - role: Senior Software Engineer
-    company: Placeholder Co
-    start: 2023-01
+  - role: Senior Software Engineer III
+    company: Cox Communications, Inc.
+    location: Atlanta, GA (Remote)
+    start: 2021-05
     end: present
-    domains: [leadership, systems]
     bullets:
-      - Led migration from monolith to services across 40-engineer org
-      - Drove observability platform adoption; pages reduced 60%
-      - Mentored four engineers from mid to senior
-  - role: Staff Engineer
-    company: Studio Null
-    start: 2020-03
-    end: 2022-12
-    domains: [leadership, frontend]
+      - Developed complex SPAs and reusable component libraries using Vue.js and Storybook.js, supporting internal tooling used broadly across the organization.
+      - Built the Buzz Project Management Application, integrating SharePoint and Jira APIs to deliver high-level analytics and project tracking dashboards for cross-functional teams.
+      - Developed the Outages Application, consolidating real-time service and application outage data from SharePoint and New Relic into a single unified monitoring dashboard.
+      - Designed and implemented automated business workflows and approval pipelines using Microsoft Power Automate and Azure, streamlining the Adobe XD → Storybook → Vue.js design-to-development pipeline.
+      - Built CoxOne News Application, an internal news aggregation platform serving the broader organization.
+      - Implemented TDD practices across component development; led weekly Design & Development ideation sessions alongside daily SCRUM and sprint planning.
+    tech: [Vue.js, TypeScript, JavaScript, Azure, Microsoft SharePoint, PowerApps, Power Automate, M365, Storybook.js, Adobe XD, Jira, New Relic]
+
+  - role: Senior Software Engineer & DevOps Lead
+    company: US Service Animals
+    location: Covington, LA (Remote)
+    start: 2020-08
+    end: 2021-02
     bullets:
-      - Shipped five product areas from zero to revenue
-      - Authored team's design-system and contribution guide
-  - role: Lead Engineer
-    company: Lumen Labs
-    start: 2018-06
-    end: 2020-02
-    domains: [systems, ml]
+      - Architected and implemented the company's first Agile/Scrum sprint-based release cycle, deploying Jira and Confluence and training the full organization including CEO, CTO, and non-technical staff.
+      - Migrated monolithic AWS infrastructure to a distributed microservices model across isolated EC2, RDS, S3, and VPC environments following a Development/Staging/Production (DSP) model.
+      - Built custom Docker and Docker Compose environments mirroring AWS production, incorporating dynamic database seeding, 12-Factor App architecture, and DotEnv configuration management.
+      - Established trunk-based Git workflows with automated pipeline triggers, enforced code review standards, semantic versioning, and created the company's first QA and UAT release processes from scratch.
+      - Authored comprehensive documentation for all DevOps workflows, CI/CD pipelines, and release processes — all net-new for the organization.
+      - Delivered PHP/Yii2 feature development and bug fixes across checkout flows, internal tooling, and shipping/billing systems.
+    tech: [PHP, Yii2, JavaScript, TypeScript, jQuery, Bootstrap, AWS, Docker, Docker Compose, Jira, Confluence, GitHub, Bash/Shell, Redis, Nginx, MySQL]
+
+  - role: Senior Software Engineer
+    company: Libertas Funding LLC
+    location: Greenwich, CT (Remote)
+    start: 2020-02
+    end: 2020-05
     bullets:
-      - Built ingestion pipeline handling 3B events/day
-      - First production deployment of in-house ML inference service
+      - Developed and integrated the company's first third-party lender API (Lendio), which became the foundational architecture for a full external API platform supporting multiple lenders via webhooks and polling endpoints.
+      - Collaborated directly with the CTO and external partners to define API contract design, integration standards, and data flow.
+      - Contributed to a PHP legacy system in active migration to a Node.js/React architecture.
+    tech: [React, PHP, JavaScript, Docker, AWS, SQL, MySQL]
+
+  - role: Senior Software Engineer
+    company: Thrivee Inc.
+    location: New York, NY (Remote)
+    start: 2019-06
+    end: 2019-10
+    bullets:
+      - Led AWS DevOps buildout for a HIPAA-compliant behavioral health SaaS platform supporting individuals with Opioid Use Disorder, separating environments into isolated AWS Organization Accounts for regulatory compliance.
+      - Architected CI/CD pipelines using AWS CodePipeline and CodeCommit; provisioned Development, UAT/Staging, and Production environments on Elastic Beanstalk and EC2.
+      - Built local Docker/Docker Compose development environments and an AWS CDK application for fully programmatic infrastructure deployment.
+      - Obtained HIPAA Security & Privacy Certification (H109); received HiTrust Certification training.
+    tech: [PHP, Laravel, Lumen, JavaScript, Docker, AWS, AWS CLI, AWS CDK, MySQL]
+
+  - role: Software Engineer II (Senior Resource)
+    company: Huddle, Inc. (GoFan)
+    location: Alpharetta, GA
+    start: 2018-01
+    end: 2019-04
+    bullets:
+      - Took ownership of iOS and Android applications from external partners and led feature development across multiple codebases in a high-visibility role reporting directly to the Director of Technology.
+      - Engineered the GoFan Docker environment — a multi-stage Alpine Linux container integrating Postgres, Redis, and ElasticSearch with a bash console UI — simplifying the full development, testing, and deployment workflow.
+      - Refactored the GoFan Admin Ruby on Rails application, including financial reporting via API and performance improvements; contributed to GoFan Admin v2 Java Spring / React migration.
+      - Untangled a shared dependency web spanning all company applications; mentored junior developers and interns on best practices, documentation, and version control.
+      - Owned the full release lifecycle: QA, code reviews, pull requests, changelogs, semantic versioning, hot-fixing, and AWS deployments.
+    tech: [Ruby on Rails, Java, Spring MVC, JavaScript, React, Angular, Ionic, Cordova, Express.js, Sequelize.js, Jest, Storybook, ElasticSearch, Postgres, Redis, Docker, AWS, Bootstrap, Linux/Bash]
+
+  - role: Full-Stack PHP Developer
+    company: White Sunrise
+    location: Atlanta, GA
+    start: 2017-03
+    end: 2017-12
+    bullets:
+      - Managed all SDLC phases — planning, client communication, development, and deployment — for multiple client web applications.
+      - Built TRPZ, a web and mobile trip-booking application with payment processing, admin accounts, and Authorize.net integration using Laravel and Vue.js.
+      - Built Respondable, a corporate training and billing platform from scratch in Laravel 5.3, featuring role/permission packages and full recurring billing via the Authorize.net SDK.
+    tech: [PHP, Laravel, Vue.js, JavaScript, MySQL, Vagrant, Magento, Bootstrap]
+
+  - role: Software Engineer / PHP Developer
+    company: Springbot
+    location: Atlanta, GA
+    start: 2016-03
+    end: 2017-01
+    bullets:
+      - Defined and implemented integration standards for Magento (1/2), Shopify, and BigCommerce via custom PHP and Ruby plugins, enabling seamless data flow between the Springbot platform and client storefronts.
+      - Architected API endpoints and custom event listeners/observers for customer segmentation, email list building, and behavioral tracking (page views, cart adds, abandoned carts).
+      - Managed the Springbot WordPress marketing site; provided cross-departmental support and help desk services.
+    tech: [PHP, ReactPHP, Ruby, JavaScript, Magento, Shopify, BigCommerce, WordPress, REST APIs, Linux, Bash, SSH]
+
+  - role: Web Developer / Software Engineer
+    company: SouthComm Inc. / Creative Loafing
+    location: Atlanta, GA
+    start: 2013-04
+    end: 2016-01
+    bullets:
+      - Saved $2,400/month ($21,600 in 2014 alone) by migrating externally-hosted medical news publications to in-house Drupal 7 infrastructure.
+      - Saved $800/month by building a custom Editorial Reservation System for newspaper article scheduling with advanced reporting, charts, and analytics — built from scratch in Laravel.
+      - Saved $300/month by migrating an externally-hosted Ad Proofing application to in-house servers.
+      - Created OMGSurvey.com, a full-featured survey creation and reporting tool with embeddable widgets, custom styling, and data export.
+      - Designed and deployed custom event websites used across 2–5 cities each — Bacon & Bourbon Festival, Margarita Wars, Iron Fork, Crafts & Drafts, Nashville Movies in the Park, and more.
+    tech: [PHP, Laravel, Drupal 7, JavaScript, ColdFusion, Bootstrap, MySQL, HTML5, CSS3]
+
+  - role: Full-Stack Developer / Consultant
+    company: Professional Photographic Resources (PPR Inc.)
+    location: Atlanta, GA
+    start: 2014-01
+    end: 2016-01
+    freelance: true
+    bullets:
+      - Increased software downloads 20% within the first month via SEO optimization and Google Analytics custom dashboards.
+      - Launched PPRpix.com and PPRatlanta.com on WordPress and a full Magento-based rental, sales, inventory, and POS platform, replacing a fragmented manual workflow entirely.
+      - Integrated eBay product feed, iContact newsletter sign-up, studio rental applications, and credit card authorization into the Magento platform; built an internal staff wiki and secure password management tool.
+    tech: [PHP, WordPress, Magento, JavaScript, MySQL, Google Analytics, SEO, Google Maps API, Facebook API]
+
 education:
-  - school: University
-    degree: B.S. Computer Science
+  - school: Chattahoochee Technical College
+    location: Marietta, GA
+    degree: Associate of Applied Science
+    field: Computer Information Systems, Computer Programming
     year: 2012
+
+certifications:
+  - name: HIPAA Security & Privacy Training
+    code: H109
+    issued: 2019-07
+
 skills:
   - group: Languages
-    items: [TypeScript, Rust, Go, Python, Elixir]
-  - group: Platforms
-    items: [AWS, Cloudflare, Kubernetes, Postgres, Redis]
-  - group: Frontend
-    items: [Vue, React, Tailwind, Motion]
-principles:
-  - Ship the thing. Then make it beautiful.
-  - The cheapest system is the one you understand.
-  - Earn the right to abstract.
+    items: [PHP, JavaScript, TypeScript, Ruby, Java, SQL, HTML5, CSS3, SASS/LESS, Bash/Shell, XML]
+  - group: Frameworks & Libraries
+    items: [Laravel, Lumen, Vue.js, Nuxt.js, React, Next.js, Angular, Ruby on Rails, Symfony, Yii2, Tailwind CSS, Bootstrap, jQuery, Express.js, Ionic, Cordova, AWS CDK]
+  - group: Cloud & DevOps
+    items: [AWS, Docker, Docker Compose, CI/CD, GitHub Actions, Jenkins, Travis CI, Git Hooks]
+  - group: Databases & Search
+    items: [MySQL, PostgreSQL, Redis, ElasticSearch]
+  - group: Tools & Platforms
+    items: [Git, GitHub, GitLab, BitBucket, Jira, Confluence, Storybook.js, Adobe XD, Webpack, Vite, npm, Composer, New Relic, DataDog, Sentry]
+  - group: Testing
+    items: [PHPUnit, Jest, RSpec, JUnit, Selenium, Laravel Dusk, Enzyme, Storybook]
+  - group: Methodologies
+    items: [Agile/Scrum, TDD, OOP, Functional Programming, Microservices, 12-Factor App, REST API Design, MVC, SDLC]
+
 contact:
   email: hello@digitalseraph.com
   github: digitalseraph
-  linkedin: davidmiller
+  linkedin: davidthedeveloper
