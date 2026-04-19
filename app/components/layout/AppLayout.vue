@@ -17,7 +17,7 @@ if (typeof window !== "undefined") motion.init();
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-[var(--canvas-raised)] focus:text-[var(--accent)] focus:px-3 focus:py-2 focus:rounded">
     skip to content
   </a>
-  <TheNavBar @open-palette="paletteOpen = true" />
+  <TheNavBar @toggle-palette="paletteOpen = !paletteOpen" />
   <main id="main" class="pt-12">
     <slot />
   </main>
