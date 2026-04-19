@@ -17,3 +17,9 @@ body {
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+@media print {
+  nav, footer, .skip-link { display: none !important; }
+  main { padding: 0 !important; }
+  body { background: #fff !important; color: #111 !important; }
+}
