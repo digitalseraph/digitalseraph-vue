@@ -45,3 +45,24 @@ test("work detail page renders", async ({ page }) => {
   await page.goto("/work/01-project-one");
   await expect(page.getByRole("heading", { name: "Project One" })).toBeVisible();
 });
+
+test("writing post renders meta, prose, and nav", async ({ page }) => {
+  await page.goto("/writing/2026-03-12-first-post");
+
+  // Accent kicker
+  await expect(page.getByText("$ writing/")).toBeVisible();
+
+  // Date + reading time line
+  await expect(page.getByText(/min read/)).toBeVisible();
+
+  // Title
+  await expect(
+    page.getByRole("heading", { level: 1, name: /On craft/i })
+  ).toBeVisible();
+
+  // Prose container (from @tailwindcss/typography + our overrides)
+  await expect(page.locator("article .prose")).toBeVisible();
+
+  // Post nav — this is the newer of 2 seeded posts, so only "← previous" shows
+  await expect(page.getByText(/← previous/)).toBeVisible();
+});
