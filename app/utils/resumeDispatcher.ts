@@ -1,8 +1,16 @@
 import type { Resume } from "~/types/resume";
 
+export type OutputComponentName =
+  | "WhoamiBlock"
+  | "ExperienceList"
+  | "SkillsGrid"
+  | "EducationBlock"
+  | "ContactBlock"
+  | "HelpBlock";
+
 export type OutputEntry =
   | { kind: "text"; text: string }
-  | { kind: "component"; name: string }
+  | { kind: "component"; name: OutputComponentName }
   | { kind: "clear" }
   | null;
 
