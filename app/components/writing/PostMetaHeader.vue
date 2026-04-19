@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { fmtPostDate } from "~/utils/postDate";
 
 const props = withDefaults(
   defineProps<{
@@ -10,13 +11,7 @@ const props = withDefaults(
   { kicker: "$ writing/" }
 );
 
-const formatted = computed(() =>
-  new Date(props.date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  })
-);
+const formatted = computed(() => fmtPostDate(props.date));
 </script>
 
 <template>

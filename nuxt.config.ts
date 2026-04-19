@@ -1,8 +1,10 @@
 import tailwindcss from "@tailwindcss/vite";
+import type { ThemeRegistrationRaw } from "shiki";
 import digitalseraphDarkRaw from "./app/assets/shiki/digitalseraph-dark.json";
-
-// Deep clone so Shiki's internal mutations during theme normalization
-// cannot introduce circular references that break Nuxt's config cloning.
+// Deep-clone the raw JSON. Without this, @nuxt/content's config serialization
+// (via klona) crashes with "Maximum call stack size exceeded" because Shiki
+// mutates the imported module object with circular references during theme
+// normalization.
 const digitalseraphDark = JSON.parse(JSON.stringify(digitalseraphDarkRaw));
 
 export default defineNuxtConfig({
@@ -43,7 +45,12 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: { default: digitalseraphDark as any },
+          // @nuxt/content 3.13 requires the multi-theme object shape for the
+          // `theme` option even when you only ship one theme. A flat
+          // `theme: digitalseraphDark` fails schema validation — it iterates
+          // the theme's keys via Object.entries and tries to resolve each
+          // value as a bundled Shiki theme name.
+          theme: { default: digitalseraphDark as ThemeRegistrationRaw },
           langs: [
             "ts",
             "js",
