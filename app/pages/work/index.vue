@@ -23,6 +23,7 @@ useHead({ title: "Work — digitalseraph" });
         :summary="p.summary"
         :stack="p.stack"
         :cover="p.cover"
+        heading-level="h2"
       />
     </div>
   </section>

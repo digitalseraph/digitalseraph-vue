@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TagChip from "./TagChip.vue";
 
-defineProps<{
+const props = defineProps<{
   slug: string;
   title: string;
   year: number;
@@ -9,7 +9,10 @@ defineProps<{
   summary: string;
   stack: string[];
   cover?: string;
+  headingLevel?: "h2" | "h3";
 }>();
+
+const tag = props.headingLevel ?? "h3";
 </script>
 
 <template>
@@ -21,7 +24,7 @@ defineProps<{
       <img :src="cover" :alt="''" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
     </div>
     <div class="flex items-baseline justify-between mb-1">
-      <h3 class="text-[var(--text-display-m)] font-display font-semibold tracking-[-0.02em] text-[var(--text)]">{{ title }}</h3>
+      <component :is="tag" class="text-[var(--text-display-m)] font-display font-semibold tracking-[-0.02em] text-[var(--text)]">{{ title }}</component>
       <span class="font-mono text-[var(--text-mono)] text-[var(--text-dim)]">{{ year }}</span>
     </div>
     <p class="font-mono text-[var(--text-mono)] text-[var(--text-muted)] mb-3">{{ role }}</p>

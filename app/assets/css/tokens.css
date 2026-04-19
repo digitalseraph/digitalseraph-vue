@@ -4,7 +4,7 @@
   --color-line: rgba(255, 255, 255, 0.08);
   --color-text: #fafafa;
   --color-text-muted: #a3a3a3;
-  --color-text-dim: #525252;
+  --color-text-dim: #7a7a7a;
   --color-accent: #22c55e;
   --color-accent-glow: rgba(34, 197, 94, 0.35);
   --color-grid-line: rgba(255, 255, 255, 0.04);
@@ -49,7 +49,7 @@
   --line: rgba(10, 10, 10, 0.1);
   --text: #1c1917;
   --text-muted: #57534e;
-  --text-dim: #a8a29e;
+  --text-dim: #737373;
   --grid-line: rgba(10, 10, 10, 0.04);
   color-scheme: light;
 }

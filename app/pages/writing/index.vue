@@ -20,6 +20,7 @@ useHead({ title: "Writing — digitalseraph" });
         :title="p.title"
         :date="p.date"
         :excerpt="p.excerpt"
+        heading-level="h2"
       />
     </div>
   </section>
