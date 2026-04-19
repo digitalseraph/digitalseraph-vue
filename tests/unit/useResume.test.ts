@@ -1,7 +1,25 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { ref } from "vue";
+import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 import { useResume } from "~/composables/useResume";
 
+const { queryCollectionMock, useAsyncDataMock } = vi.hoisted(() => ({
+  queryCollectionMock: vi.fn(),
+  useAsyncDataMock: vi.fn(),
+}));
+
+mockNuxtImport("queryCollection", () => queryCollectionMock);
+mockNuxtImport("useAsyncData", () => useAsyncDataMock);
+
 describe("useResume", () => {
+  beforeEach(() => {
+    queryCollectionMock.mockReset();
+    useAsyncDataMock.mockReset();
+    useAsyncDataMock.mockImplementation(async (_key: string, fn: () => Promise<any>) => ({
+      data: ref(await fn()),
+    }));
+  });
+
   it("returns the parsed resume shape when queryCollection resolves", async () => {
     const mockResume = {
       header: { name: "Test", title: "Test Role", location: "Remote", email: "a@b", github: "x", linkedin: "y" },
@@ -12,7 +30,7 @@ describe("useResume", () => {
       skills: [],
       contact: { email: "a@b", github: "x", linkedin: "y" },
     };
-    vi.stubGlobal("queryCollection", (name: string) => {
+    queryCollectionMock.mockImplementation((name: string) => {
       expect(name).toBe("resume");
       return { first: async () => mockResume };
     });
@@ -23,7 +41,7 @@ describe("useResume", () => {
   });
 
   it("returns null when queryCollection yields no data", async () => {
-    vi.stubGlobal("queryCollection", () => ({ first: async () => null }));
+    queryCollectionMock.mockImplementation(() => ({ first: async () => null }));
     const resume = await useResume();
     expect(resume.value).toBeNull();
   });
