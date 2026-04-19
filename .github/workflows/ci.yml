@@ -15,9 +15,9 @@ jobs:
     name: Unit + component tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -28,9 +28,9 @@ jobs:
     name: Playwright E2E
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -42,15 +42,15 @@ jobs:
     name: Static build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: static-output
           path: .output/public
@@ -61,14 +61,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: static-output
           path: .output/public
