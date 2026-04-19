@@ -1,4 +1,9 @@
 import tailwindcss from "@tailwindcss/vite";
+import digitalseraphDarkRaw from "./app/assets/shiki/digitalseraph-dark.json";
+
+// Deep clone so Shiki's internal mutations during theme normalization
+// cannot introduce circular references that break Nuxt's config cloning.
+const digitalseraphDark = JSON.parse(JSON.stringify(digitalseraphDarkRaw));
 
 export default defineNuxtConfig({
   compatibilityDate: "2026-04-18",
@@ -32,10 +37,29 @@ export default defineNuxtConfig({
   },
 
   content: {
-    highlight: false,
     // Node 22+ has a built-in sqlite module; use it so @nuxt/content
     // does not require the optional better-sqlite3 native dep.
     experimental: { sqliteConnector: "native" },
+    build: {
+      markdown: {
+        highlight: {
+          theme: { default: digitalseraphDark as any },
+          langs: [
+            "ts",
+            "js",
+            "vue",
+            "bash",
+            "shell",
+            "css",
+            "html",
+            "json",
+            "yaml",
+            "md",
+            "diff",
+          ],
+        },
+      },
+    },
   },
 
   nitro: {
