@@ -102,3 +102,24 @@ describe("dispatchCommand — existing commands", () => {
     expect(dispatchCommand(parseInput("CAT Summary.md"), ctx)).toEqual({ kind: "text", text: "fake summary" });
   });
 });
+
+describe("dispatchCommand — flavor commands", () => {
+  it("date returns a text entry formatted en-US", () => {
+    const r = dispatchCommand(parseInput("date"), ctx);
+    expect(r?.kind).toBe("text");
+    if (r?.kind === "text") {
+      expect(r.text).toMatch(/^[A-Z][a-z]{2}, [A-Z][a-z]{2} \d{1,2}, \d{4}$/);
+    }
+  });
+
+  it("uname returns 'digitalseraph'", () => {
+    expect(dispatchCommand(parseInput("uname"), ctx)).toEqual({ kind: "text", text: "digitalseraph" });
+  });
+
+  it("uname -a returns the full build string", () => {
+    expect(dispatchCommand(parseInput("uname -a"), ctx)).toEqual({
+      kind: "text",
+      text: "digitalseraph 1.0 (Vue 3, Nuxt 4, Cloudflare Workers)",
+    });
+  });
+});
