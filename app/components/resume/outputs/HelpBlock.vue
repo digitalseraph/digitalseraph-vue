@@ -23,6 +23,7 @@ const groups: HelpGroup[] = [
       { cmd: "cat projects/<slug>.md", hint: "preview a project" },
       { cmd: "cat writing/<slug>.md", hint: "preview a post" },
       { cmd: "grep <term>", hint: "search across résumé + content" },
+      { cmd: "open <path>", hint: "jump to a page (projects/<slug>, writing/<slug>, or /<path>)" },
     ],
   },
   {
