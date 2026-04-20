@@ -4,11 +4,17 @@ import { ref, onMounted, watch } from "vue";
 const props = defineProps<{
   modelValue: string;
   disabled?: boolean;
+  username?: string;
+  history?: string[];
+  commands?: string[];
+  projectSlugs?: string[];
+  postSlugs?: string[];
 }>();
 
 const emit = defineEmits<{
   (e: "update:modelValue", v: string): void;
   (e: "submit", v: string): void;
+  (e: "candidates", v: string[]): void;
 }>();
 
 const inputEl = ref<HTMLInputElement | null>(null);
@@ -17,7 +23,7 @@ function focus() {
   inputEl.value?.focus();
 }
 
-function onEnter(e: KeyboardEvent) {
+function onKey(e: KeyboardEvent) {
   if (e.key === "Enter") {
     e.preventDefault();
     emit("submit", props.modelValue);
@@ -32,12 +38,16 @@ defineExpose({ focus });
 
 <template>
   <div class="flex items-center gap-2 font-mono text-[var(--text-mono-l)] border-t border-[var(--line)] pt-3">
-    <span class="text-[var(--accent)] select-none">$</span>
+    <span class="font-mono text-[var(--accent)] select-none">{{ username || "user" }}</span>
+    <span class="font-mono text-[var(--text-muted)] select-none">@digitalseraph</span>
+    <span class="font-mono text-[var(--text-dim)] select-none">:</span>
+    <span class="font-mono text-[var(--text-muted)] select-none">~</span>
+    <span class="font-mono text-[var(--accent)] select-none">$</span>
     <input
       ref="inputEl"
       :value="modelValue"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      @keydown="onEnter"
+      @keydown="onKey"
       :disabled="disabled"
       type="text"
       autocomplete="off"
