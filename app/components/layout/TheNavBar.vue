@@ -38,7 +38,7 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
       <ul class="hidden md:flex items-center gap-5 text-[var(--text-muted)]">
         <li><NuxtLink to="/about" class="hover:text-[var(--accent)] transition-colors">about</NuxtLink></li>
         <li><NuxtLink to="/work" class="hover:text-[var(--accent)] transition-colors">work</NuxtLink></li>
-        <li><NuxtLink to="/resume" class="hover:text-[var(--accent)] transition-colors">resume</NuxtLink></li>
+        <li><NuxtLink to="/resume" class="text-[var(--accent)] hover:underline underline-offset-4">resume</NuxtLink></li>
         <li><NuxtLink to="/writing" class="hover:text-[var(--accent)] transition-colors">writing</NuxtLink></li>
         <li><NuxtLink to="/contact" class="hover:text-[var(--accent)] transition-colors">contact</NuxtLink></li>
       </ul>
