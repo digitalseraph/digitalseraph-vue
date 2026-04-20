@@ -80,6 +80,8 @@ const handlers: Record<string, Handler> = {
     kind: "text",
     text: `${ctx.prompt.user} is not in the sudoers file.  This incident will be reported.`,
   }),
+  exit: () => ({ kind: "navigate", path: "/" }),
+  logout: () => ({ kind: "navigate", path: "/" }),
   cat: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "summary.md") return { kind: "text", text: ctx.resume.summary };

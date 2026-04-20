@@ -167,3 +167,12 @@ describe("dispatchCommand — sudo", () => {
     });
   });
 });
+
+describe("dispatchCommand — exit/logout", () => {
+  it("exit returns navigate to /", () => {
+    expect(dispatchCommand(parseInput("exit"), ctx)).toEqual({ kind: "navigate", path: "/" });
+  });
+  it("logout returns navigate to /", () => {
+    expect(dispatchCommand(parseInput("logout"), ctx)).toEqual({ kind: "navigate", path: "/" });
+  });
+});
