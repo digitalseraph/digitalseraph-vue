@@ -125,4 +125,18 @@ test.describe("résumé terminal", () => {
     await input.press("ArrowUp");
     await expect(input).toHaveValue("contact");
   });
+
+  test("first-run tip shows once per session, not on reload", async ({ page }) => {
+    await page.goto("/resume");
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+    // Tip appears after intro
+    await expect(terminal(page).getByText(/tip: type 'help'/)).toBeVisible();
+
+    // Reload — tip should NOT reappear (sessionStorage persists across reloads in same tab)
+    await page.reload();
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+    // Wait past the delay the tip would have appeared at (400ms after intro)
+    await page.waitForTimeout(1000);
+    await expect(terminal(page).getByText(/tip: type 'help'/)).toHaveCount(0);
+  });
 });
