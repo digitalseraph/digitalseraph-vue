@@ -87,10 +87,10 @@ useSeoMeta({
 
         <div>
           <div class="font-mono text-[var(--text-mono)] text-[var(--text-dim)] tracking-[0.2em] uppercase mb-3">$ jump</div>
-          <div class="flex flex-col gap-2 font-mono text-[var(--text-mono)]">
-            <NuxtLink to="/resume" class="text-[var(--accent)] hover:underline underline-offset-4">→ interactive résumé</NuxtLink>
-            <NuxtLink to="/work" class="text-[var(--accent)] hover:underline underline-offset-4">→ selected work</NuxtLink>
-            <NuxtLink to="/contact" class="text-[var(--accent)] hover:underline underline-offset-4">→ get in touch</NuxtLink>
+          <div class="flex flex-col font-mono text-[var(--text-mono)]">
+            <NuxtLink to="/resume" class="block py-1.5 min-h-[24px] text-[var(--accent)] hover:underline underline-offset-4">→ interactive résumé</NuxtLink>
+            <NuxtLink to="/work" class="block py-1.5 min-h-[24px] text-[var(--accent)] hover:underline underline-offset-4">→ selected work</NuxtLink>
+            <NuxtLink to="/contact" class="block py-1.5 min-h-[24px] text-[var(--accent)] hover:underline underline-offset-4">→ get in touch</NuxtLink>
           </div>
         </div>
       </aside>
