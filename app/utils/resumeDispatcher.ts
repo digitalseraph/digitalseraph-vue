@@ -75,6 +75,7 @@ const handlers: Record<string, Handler> = {
     }
     return { kind: "text", text: "digitalseraph" };
   },
+  echo: (parsed) => ({ kind: "text", text: parsed.args.join(" ") }),
   cat: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "summary.md") return { kind: "text", text: ctx.resume.summary };

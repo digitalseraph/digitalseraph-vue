@@ -123,3 +123,31 @@ describe("dispatchCommand — flavor commands", () => {
     });
   });
 });
+
+describe("dispatchCommand — echo", () => {
+  it("echo joins args with a single space", () => {
+    expect(dispatchCommand(parseInput("echo hello world"), ctx)).toEqual({
+      kind: "text", text: "hello world",
+    });
+  });
+
+  it("echo preserves the case of args", () => {
+    expect(dispatchCommand(parseInput("echo Hello World"), ctx)).toEqual({
+      kind: "text", text: "Hello World",
+    });
+  });
+
+  it("echo with no args returns an empty text entry", () => {
+    expect(dispatchCommand(parseInput("echo"), ctx)).toEqual({
+      kind: "text", text: "",
+    });
+  });
+
+  it("echo output kind is 'text' even when args contain HTML (XSS guard)", () => {
+    const r = dispatchCommand(parseInput("echo <script>alert(1)</script>"), ctx);
+    expect(r?.kind).toBe("text");
+    if (r?.kind === "text") {
+      expect(r.text).toContain("<script>");
+    }
+  });
+});
