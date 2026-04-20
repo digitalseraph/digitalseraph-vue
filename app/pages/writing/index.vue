@@ -11,6 +11,7 @@ useHead({ title: "Writing — digitalseraph" });
 
 <template>
   <section class="max-w-2xl mx-auto px-8 py-24">
+    <div class="font-mono text-[var(--text-mono)] text-[var(--accent)] mb-2 tracking-[0.2em] uppercase">$ ls writing/</div>
     <h1 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em] mb-10">writing</h1>
     <div>
       <PostCard
