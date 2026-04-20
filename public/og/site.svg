@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <g opacity="0.08">
+    <path d="M0 100h1200M0 200h1200M0 300h1200M0 400h1200M0 500h1200M0 600h1200M100 0v630M200 0v630M300 0v630M400 0v630M500 0v630M600 0v630M700 0v630M800 0v630M900 0v630M1000 0v630M1100 0v630" stroke="#ffffff" stroke-width="1"/>
+  </g>
+  <text x="80" y="140" fill="#7a7a7a" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="4">~/DIGITALSERAPH.COM · ONLINE</text>
+  <text x="80" y="230" fill="#22c55e" font-family="JetBrains Mono, monospace" font-size="36">$ whoami</text>
+  <text x="80" y="420" fill="#fafafa" font-family="Space Grotesk, sans-serif" font-size="160" font-weight="600" letter-spacing="-0.06em">david <tspan fill="#22c55e" font-style="italic">miller</tspan></text>
+  <text x="80" y="490" fill="#a3a3a3" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="4">FULL-STACK · CLOUD · DEVOPS</text>
+  <text x="80" y="530" fill="#7a7a7a" font-family="JetBrains Mono, monospace" font-size="20">Senior Software Engineer III · Cox Communications · 10+ years</text>
+</svg>

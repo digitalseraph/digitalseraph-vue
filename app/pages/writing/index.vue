@@ -6,7 +6,14 @@ const { data: posts } = await useAsyncData("all-writing", () =>
   queryCollection("writing").where("draft", "=", false).order("date", "DESC").all()
 );
 
-useHead({ title: "Writing — digitalseraph" });
+useSeoMeta({
+  title: "Writing — digitalseraph",
+  ogTitle: "Writing — digitalseraph",
+  ogDescription: "Occasional notes on engineering, systems, and shipping.",
+  ogImage: "https://digitalseraph.com/og/site.svg",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>
