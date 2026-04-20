@@ -182,6 +182,34 @@ const handlers: Record<string, Handler> = {
 
     return { kind: "component", name: "GrepResults", props: { term, matches } };
   },
+  open: (parsed, ctx) => {
+    const rawArg = parsed.args[0];
+    if (!rawArg) {
+      return { kind: "text", text: "open: missing path. usage: open <path>" };
+    }
+    if (rawArg.startsWith("/")) {
+      return { kind: "navigate", path: rawArg };
+    }
+
+    const path = rawArg.toLowerCase();
+    const projectsMatch = /^projects\/(.+?)(\.md)?$/.exec(path);
+    if (projectsMatch) {
+      const slug = projectsMatch[1]!;
+      const found = ctx.projects.find((p) => p.slug.toLowerCase() === slug);
+      if (found) return { kind: "navigate", path: `/work/${found.slug}` };
+      return { kind: "text", text: `open: ${rawArg.replace(/\.md$/, "")}: No such file or directory` };
+    }
+
+    const writingMatch = /^writing\/(.+?)(\.md)?$/.exec(path);
+    if (writingMatch) {
+      const slug = writingMatch[1]!;
+      const found = ctx.posts.find((p) => p.slug.toLowerCase() === slug);
+      if (found) return { kind: "navigate", path: `/writing/${found.slug}` };
+      return { kind: "text", text: `open: ${rawArg.replace(/\.md$/, "")}: No such file or directory` };
+    }
+
+    return { kind: "text", text: `open: ${rawArg}: No such file or directory` };
+  },
   ls: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "") {

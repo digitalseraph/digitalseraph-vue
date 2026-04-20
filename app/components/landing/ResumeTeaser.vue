@@ -3,7 +3,7 @@ import SectionReveal from "~/components/primitives/SectionReveal.vue";
 </script>
 
 <template>
-  <SectionReveal class="max-w-[1280px] mx-auto px-8 py-32">
+  <SectionReveal class="max-w-[1280px] mx-auto px-8 py-20">
     <div class="flex items-baseline justify-between mb-10">
       <div>
         <div class="font-mono text-[var(--text-mono)] text-[var(--accent)] mb-2 tracking-[0.2em] uppercase">$ ./resume</div>

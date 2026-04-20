@@ -1,10 +1,41 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { didYouMean, type Candidate } from "~/utils/didYouMean";
 
 defineProps<{ error: { statusCode: number; message?: string; url?: string } }>();
 
 const route = useRoute();
 const path = route.fullPath;
+
+const { data: projectsData } = useAsyncData("error-projects", () =>
+  queryCollection("work").order("year", "DESC").all()
+);
+const { data: postsData } = useAsyncData("error-posts", () =>
+  queryCollection("writing").where("draft", "=", false).order("date", "DESC").all()
+);
+
+const candidates = computed<Candidate[]>(() => {
+  const base: Candidate[] = [
+    { path: "/", label: "home" },
+    { path: "/about", label: "about" },
+    { path: "/work", label: "work" },
+    { path: "/resume", label: "resume" },
+    { path: "/writing", label: "writing" },
+    { path: "/contact", label: "contact" },
+  ];
+  const projects = (projectsData.value ?? []).map((p) => ({
+    path: `/work/${p.stem.replace(/^work\//, "")}`,
+    label: p.title,
+  }));
+  const posts = (postsData.value ?? []).map((p) => ({
+    path: `/writing/${p.stem.replace(/^writing\//, "")}`,
+    label: p.title,
+  }));
+  return [...base, ...projects, ...posts];
+});
+
+const suggestion = computed(() => didYouMean(path, candidates.value));
 
 function home() {
   clearError({ redirect: "/" });
@@ -18,7 +49,7 @@ function home() {
         ~/digitalseraph.com · error
       </div>
 
-      <div class="font-mono text-[var(--text-mono-l)] space-y-2 mb-12">
+      <div class="font-mono text-[var(--text-mono-l)] space-y-2 mb-8">
         <div>
           <span class="text-[var(--accent)]">$</span>
           <span class="ml-2 text-[var(--text)]">cat {{ path }}</span>
@@ -29,6 +60,15 @@ function home() {
         <div v-else class="text-[var(--text-muted)]">
           bash: {{ error.statusCode }}: {{ error.message || 'internal error' }}
         </div>
+      </div>
+
+      <div v-if="suggestion && error.statusCode === 404" class="font-mono text-[var(--text-mono-l)] mb-8">
+        <div class="text-[var(--text-dim)]">did you mean:</div>
+        <NuxtLink
+          :to="suggestion.path"
+          class="block mt-1 text-[var(--accent)] hover:underline underline-offset-4"
+          @click="home"
+        >→ {{ suggestion.path }}<span v-if="suggestion.label && suggestion.label !== suggestion.path" class="ml-2 text-[var(--text-dim)]">{{ suggestion.label }}</span></NuxtLink>
       </div>
 
       <h1 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em] mb-6 text-[var(--text)]">
