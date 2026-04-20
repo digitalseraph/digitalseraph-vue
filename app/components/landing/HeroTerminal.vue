@@ -4,6 +4,7 @@ import GridBackdrop from "~/components/primitives/GridBackdrop.vue";
 import TerminalPrompt from "~/components/primitives/TerminalPrompt.vue";
 import { useParallax } from "~/composables/useParallax";
 import { useMotionStore } from "~/stores/motion";
+import { useTyping } from "~/composables/useTyping";
 import { storeToRefs } from "pinia";
 
 const motion = useMotionStore();
@@ -29,6 +30,45 @@ watch(
     setTimeout(() => { nameVisible.value = true; }, 150);
   }
 );
+
+const taglineTyping = useTyping({
+  text: "Full-Stack · Cloud · DevOps",
+  speed: 35,
+  reduced,
+});
+
+const subtitleTyping = useTyping({
+  text: "Senior Software Engineer III · Cox Communications · 10+ years",
+  speed: 22,
+  reduced,
+});
+
+const subtitleRevealed = ref(false);
+
+watch(nameVisible, (v) => {
+  if (!v) return;
+  if (reduced.value) {
+    taglineTyping.displayed.value = "Full-Stack · Cloud · DevOps";
+    taglineTyping.done.value = true;
+    subtitleTyping.displayed.value = "Senior Software Engineer III · Cox Communications · 10+ years";
+    subtitleTyping.done.value = true;
+    subtitleRevealed.value = true;
+    return;
+  }
+  // Name reveal total time: 10 letters * 60ms + 200ms offset + 150ms = ~950ms
+  setTimeout(() => { taglineTyping.start(); }, 950);
+});
+
+// Second line starts after first finishes
+watch(() => taglineTyping.done.value, (d) => {
+  if (d && !reduced.value) {
+    setTimeout(() => { subtitleTyping.start(); }, 150);
+  }
+});
+
+watch(() => subtitleTyping.done.value, (d) => {
+  if (d) subtitleRevealed.value = true;
+});
 </script>
 
 <template>
@@ -62,11 +102,16 @@ watch(
           </span>
         </h1>
         <div class="mt-6 space-y-2" :style="{ transform: foregroundTransform }">
-          <div class="font-mono text-[var(--text-mono)] text-[var(--text-muted)] tracking-[0.2em] uppercase">
-            Full-Stack · Cloud · DevOps
+          <div class="font-mono text-[var(--text-mono)] text-[var(--text-muted)] tracking-[0.2em] uppercase min-h-[1.5em]">
+            {{ taglineTyping.displayed }}<span v-if="!taglineTyping.done" class="inline-block w-[6px] h-[12px] align-[-1px] bg-[var(--accent)] cursor-blink" aria-hidden="true"></span>
           </div>
-          <div class="font-mono text-[var(--text-mono)] text-[var(--text-dim)]">
-            Senior Software Engineer III · <NuxtLink to="/work/01-jump" class="hover:text-[var(--accent)] hover:underline underline-offset-4 transition-colors">Cox Communications</NuxtLink> · 10+ years
+          <div class="font-mono text-[var(--text-mono)] text-[var(--text-dim)] min-h-[1.5em]">
+            <template v-if="subtitleRevealed">
+              Senior Software Engineer III · <NuxtLink to="/work/01-jump" class="hover:text-[var(--accent)] hover:underline underline-offset-4 transition-colors">Cox Communications</NuxtLink> · 10+ years
+            </template>
+            <template v-else>
+              <span>{{ subtitleTyping.displayed }}</span><span class="inline-block w-[6px] h-[12px] align-[-1px] bg-[var(--accent)] cursor-blink" aria-hidden="true"></span>
+            </template>
           </div>
         </div>
       </div>
@@ -112,5 +157,11 @@ watch(
     transform: none;
     transition: none;
   }
+}
+
+@keyframes cursor-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.cursor-blink { animation: cursor-blink 1.1s infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink { animation: none; opacity: 1; }
 }
 </style>
