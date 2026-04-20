@@ -48,6 +48,33 @@ const { toast } = useHeadingAnchors(articleRef);
 
 useHead(() => ({
   title: post.value ? `${post.value.title} — digitalseraph` : "digitalseraph",
+  script: post.value
+    ? [
+        {
+          type: "application/ld+json",
+          innerHTML: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.value.title,
+            datePublished: post.value.date,
+            dateModified: post.value.date,
+            description: post.value.excerpt,
+            author: {
+              "@type": "Person",
+              name: "David Miller",
+              url: "https://digitalseraph.com",
+            },
+            publisher: {
+              "@type": "Person",
+              name: "David Miller",
+              url: "https://digitalseraph.com",
+            },
+            mainEntityOfPage: `https://digitalseraph.com/writing/${(route.params as { slug: string }).slug}`,
+            keywords: (post.value.tags ?? []).join(", "),
+          }),
+        },
+      ]
+    : [],
 }));
 </script>
 
