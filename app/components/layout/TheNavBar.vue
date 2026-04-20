@@ -55,10 +55,11 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
           type="button"
           class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
           :aria-label="`Switch to ${theme.mode === 'dark' ? 'light' : 'dark'} mode`"
+          :aria-pressed="theme.mode === 'light'"
           @click="theme.toggle()"
         >
-          <span v-if="theme.mode === 'dark'">◐</span>
-          <span v-else>◑</span>
+          <span v-if="theme.mode === 'dark'" aria-hidden="true">○</span>
+          <span v-else aria-hidden="true">●</span>
         </button>
       </div>
     </div>
