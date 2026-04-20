@@ -27,15 +27,15 @@ useSeoMeta({
           <div class="text-[var(--accent)] tracking-[0.2em] uppercase mb-3">$ cat now.md</div>
           <dl class="space-y-2">
             <div>
-              <dt class="text-[var(--text-dim)]">currently</dt>
+              <dt class="text-[var(--text-muted)]">currently</dt>
               <dd class="text-[var(--text)]">lead engineer on Jump, Cox's internal URL shortener platform</dd>
             </div>
             <div>
-              <dt class="text-[var(--text-dim)]">learning</dt>
+              <dt class="text-[var(--text-muted)]">learning</dt>
               <dd class="text-[var(--text)]">Next.js 15, AI-augmented development workflows</dd>
             </div>
             <div>
-              <dt class="text-[var(--text-dim)]">available for</dt>
+              <dt class="text-[var(--text-muted)]">available for</dt>
               <dd class="text-[var(--text)]">senior/staff IC roles · full-time or contract · remote or Atlanta metro</dd>
             </div>
           </dl>
