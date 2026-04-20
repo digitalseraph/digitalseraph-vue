@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <g opacity="0.08">
+    <path d="M0 100h1200M0 200h1200M0 300h1200M0 400h1200M0 500h1200M0 600h1200M100 0v630M200 0v630M300 0v630M400 0v630M500 0v630M600 0v630M700 0v630M800 0v630M900 0v630M1000 0v630M1100 0v630" stroke="#ffffff" stroke-width="1"/>
+  </g>
+  <text x="80" y="140" fill="#7a7a7a" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="4">~/DIGITALSERAPH.COM · WRITING</text>
+  <text x="80" y="230" fill="#22c55e" font-family="JetBrains Mono, monospace" font-size="36">$ ls writing/</text>
+  <text x="80" y="400" fill="#fafafa" font-family="Space Grotesk, sans-serif" font-size="120" font-weight="600" letter-spacing="-0.04em">writing.</text>
+  <text x="80" y="470" fill="#a3a3a3" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="4">NOTES ON ENGINEERING, SYSTEMS, AND SHIPPING</text>
+  <text x="80" y="510" fill="#7a7a7a" font-family="JetBrains Mono, monospace" font-size="20">by David Miller · digitalseraph.com</text>
+</svg>

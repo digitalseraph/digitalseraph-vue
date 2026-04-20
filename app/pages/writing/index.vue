@@ -20,9 +20,10 @@ const postsByYear = computed(() => {
 
 useSeoMeta({
   title: "Writing — digitalseraph",
+  description: "Occasional notes on engineering, systems, and shipping.",
   ogTitle: "Writing — digitalseraph",
   ogDescription: "Occasional notes on engineering, systems, and shipping.",
-  ogImage: "https://digitalseraph.com/og/site.svg",
+  ogImage: "https://digitalseraph.com/og/writing.svg",
   ogType: "website",
   twitterCard: "summary_large_image",
 });
