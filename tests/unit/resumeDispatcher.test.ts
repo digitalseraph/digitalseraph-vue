@@ -199,3 +199,20 @@ describe("dispatchCommand — theme", () => {
     });
   });
 });
+
+describe("dispatchCommand — ls (no args)", () => {
+  it("returns a DirectoryListing with 7 items (4 files + 3 dirs)", () => {
+    const r = dispatchCommand(parseInput("ls"), ctx);
+    expect(r?.kind).toBe("component");
+    if (r?.kind === "component") {
+      expect(r.name).toBe("DirectoryListing");
+      const items = (r.props as { items: Array<{ name: string; kind: string }> }).items;
+      expect(items.map((i) => i.name)).toEqual([
+        "summary.md", "experience.md", "education.md", "contact",
+        "skills/", "projects/", "writing/",
+      ]);
+      expect(items.filter((i) => i.kind === "file").length).toBe(4);
+      expect(items.filter((i) => i.kind === "dir").length).toBe(3);
+    }
+  });
+});

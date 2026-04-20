@@ -98,6 +98,23 @@ const handlers: Record<string, Handler> = {
   },
   ls: (parsed) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
+    if (path === "") {
+      return {
+        kind: "component",
+        name: "DirectoryListing",
+        props: {
+          items: [
+            { name: "summary.md", kind: "file" },
+            { name: "experience.md", kind: "file" },
+            { name: "education.md", kind: "file" },
+            { name: "contact", kind: "file" },
+            { name: "skills/", kind: "dir" },
+            { name: "projects/", kind: "dir" },
+            { name: "writing/", kind: "dir" },
+          ],
+        },
+      };
+    }
     if (path === "skills/") return { kind: "component", name: "SkillsGrid" };
     return unknown(parsed);
   },
