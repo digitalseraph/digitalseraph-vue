@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import PostMetaHeader from "~/components/writing/PostMetaHeader.vue";
 import PostMetaTags from "~/components/writing/PostMetaTags.vue";
 import PostNav from "~/components/writing/PostNav.vue";
+import ReadingProgress from "~/components/writing/ReadingProgress.vue";
 import { readingMinutes } from "~/utils/readingTime";
 import { getPostSiblings } from "~/utils/postNav";
 import { useArrowNav } from "~/composables/useArrowNav";
@@ -50,6 +51,7 @@ useHead(() => ({
 </script>
 
 <template>
+  <ReadingProgress />
   <article v-if="post" class="max-w-2xl mx-auto px-8 py-24">
     <PostMetaHeader :date="post.date" :reading-minutes="reading" />
 
