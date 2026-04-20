@@ -96,7 +96,7 @@ const handlers: Record<string, Handler> = {
     if (path === "education.md") return { kind: "component", name: "EducationBlock" };
     return unknown(parsed);
   },
-  ls: (parsed) => {
+  ls: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "") {
       return {
@@ -116,6 +116,32 @@ const handlers: Record<string, Handler> = {
       };
     }
     if (path === "skills/") return { kind: "component", name: "SkillsGrid" };
+    if (path === "projects/") {
+      return {
+        kind: "component",
+        name: "DirectoryListing",
+        props: {
+          items: ctx.projects.map((p) => ({
+            name: `${p.slug}.md`,
+            kind: "file",
+            link: `/work/${p.slug}`,
+          })),
+        },
+      };
+    }
+    if (path === "writing/") {
+      return {
+        kind: "component",
+        name: "DirectoryListing",
+        props: {
+          items: ctx.posts.map((p) => ({
+            name: `${p.slug}.md`,
+            kind: "file",
+            link: `/writing/${p.slug}`,
+          })),
+        },
+      };
+    }
     return unknown(parsed);
   },
 };

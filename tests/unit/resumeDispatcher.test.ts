@@ -216,3 +216,39 @@ describe("dispatchCommand — ls (no args)", () => {
     }
   });
 });
+
+describe("dispatchCommand — ls projects/ and ls writing/", () => {
+  const withContent: DispatchContext = {
+    ...ctx,
+    projects: [
+      { slug: "01-jump", title: "Jump", year: 2026, stack: ["Vue 3"], summary: "jump summary" },
+      { slug: "02-thrivee", title: "Thrivee", year: 2019, stack: [], summary: "thrivee summary" },
+    ],
+    posts: [
+      { slug: "hello-world", title: "Hello", date: "2026-03-12", excerpt: "hello there" },
+    ],
+  };
+
+  it("ls projects/ returns files named <slug>.md linking to /work/<slug>", () => {
+    const r = dispatchCommand(parseInput("ls projects/"), withContent);
+    expect(r?.kind).toBe("component");
+    if (r?.kind === "component") {
+      expect(r.name).toBe("DirectoryListing");
+      const items = (r.props as { items: Array<{ name: string; kind: string; link?: string }> }).items;
+      expect(items).toEqual([
+        { name: "01-jump.md", kind: "file", link: "/work/01-jump" },
+        { name: "02-thrivee.md", kind: "file", link: "/work/02-thrivee" },
+      ]);
+    }
+  });
+
+  it("ls writing/ returns files named <slug>.md linking to /writing/<slug>", () => {
+    const r = dispatchCommand(parseInput("ls writing/"), withContent);
+    if (r?.kind === "component") {
+      const items = (r.props as { items: Array<{ name: string; kind: string; link?: string }> }).items;
+      expect(items).toEqual([
+        { name: "hello-world.md", kind: "file", link: "/writing/hello-world" },
+      ]);
+    }
+  });
+});
