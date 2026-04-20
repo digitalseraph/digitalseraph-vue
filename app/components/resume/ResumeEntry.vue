@@ -8,6 +8,7 @@ import EducationBlock from "./outputs/EducationBlock.vue";
 import ContactBlock from "./outputs/ContactBlock.vue";
 import HelpBlock from "./outputs/HelpBlock.vue";
 import DirectoryListing from "./outputs/DirectoryListing.vue";
+import ProjectPreview from "./outputs/ProjectPreview.vue";
 import type { OutputComponentName, OutputEntry } from "~/utils/resumeDispatcher";
 
 const props = defineProps<{
@@ -23,6 +24,7 @@ const outputMap: Record<OutputComponentName, Component> = {
   ContactBlock,
   HelpBlock,
   DirectoryListing,
+  ProjectPreview,
 };
 
 const component = computed(() =>
