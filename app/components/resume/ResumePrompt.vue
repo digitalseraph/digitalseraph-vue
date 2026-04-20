@@ -71,11 +71,7 @@ defineExpose({ focus });
 
 <template>
   <div class="flex items-center gap-2 font-mono text-[var(--text-mono-l)] border-t border-[var(--line)] pt-3">
-    <span class="font-mono text-[var(--accent)] select-none">{{ username || "user" }}</span>
-    <span class="font-mono text-[var(--text-muted)] select-none">@digitalseraph</span>
-    <span class="font-mono text-[var(--text-dim)] select-none">:</span>
-    <span class="font-mono text-[var(--text-muted)] select-none">~</span>
-    <span class="font-mono text-[var(--accent)] select-none">$</span>
+    <span class="select-none"><span class="text-[var(--accent)]">{{ username || "user" }}</span><span class="text-[var(--text-muted)]">@digitalseraph</span><span class="text-[var(--text-dim)]">:</span><span class="text-[var(--text-muted)]">~</span><span class="text-[var(--accent)]">$</span></span>
     <input
       ref="inputEl"
       :value="modelValue"
