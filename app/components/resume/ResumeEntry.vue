@@ -10,6 +10,7 @@ import HelpBlock from "./outputs/HelpBlock.vue";
 import DirectoryListing from "./outputs/DirectoryListing.vue";
 import ProjectPreview from "./outputs/ProjectPreview.vue";
 import PostPreview from "./outputs/PostPreview.vue";
+import GrepResults from "./outputs/GrepResults.vue";
 import type { OutputComponentName, OutputEntry } from "~/utils/resumeDispatcher";
 
 const props = defineProps<{
@@ -27,6 +28,7 @@ const outputMap: Record<OutputComponentName, Component> = {
   DirectoryListing,
   ProjectPreview,
   PostPreview,
+  GrepResults,
 };
 
 const component = computed(() =>

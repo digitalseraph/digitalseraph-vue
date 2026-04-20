@@ -9,7 +9,8 @@ export type OutputComponentName =
   | "HelpBlock"
   | "DirectoryListing"
   | "ProjectPreview"
-  | "PostPreview";
+  | "PostPreview"
+  | "GrepResults";
 
 export type OutputEntry =
   | { kind: "text"; text: string }
@@ -33,6 +34,12 @@ export interface PostRef {
   title: string;
   date: string;
   excerpt: string;
+}
+
+export interface GrepMatch {
+  source: string;
+  snippet: string;
+  link?: string;
 }
 
 export interface DispatchContext {
