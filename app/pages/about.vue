@@ -16,6 +16,24 @@ useHead({ title: `About — digitalseraph` });
       </article>
 
       <aside class="space-y-8 lg:sticky lg:top-20 lg:self-start">
+        <div class="rounded-md border border-[var(--accent)] bg-[var(--canvas-raised)] p-4 font-mono text-[var(--text-mono)]">
+          <div class="text-[var(--accent)] tracking-[0.2em] uppercase mb-3">$ cat now.md</div>
+          <dl class="space-y-2">
+            <div>
+              <dt class="text-[var(--text-dim)]">currently</dt>
+              <dd class="text-[var(--text)]">lead engineer on Jump, Cox's internal URL shortener platform</dd>
+            </div>
+            <div>
+              <dt class="text-[var(--text-dim)]">learning</dt>
+              <dd class="text-[var(--text)]">Next.js 15, AI-augmented development workflows</dd>
+            </div>
+            <div>
+              <dt class="text-[var(--text-dim)]">available for</dt>
+              <dd class="text-[var(--text)]">senior/staff IC roles · full-time or contract · remote or Atlanta metro</dd>
+            </div>
+          </dl>
+        </div>
+
         <div>
           <div class="font-mono text-[var(--text-mono)] text-[var(--text-dim)] tracking-[0.2em] uppercase mb-3">$ status</div>
           <div class="font-mono text-[var(--text-mono-l)] text-[var(--accent)]">Currently exploring roles</div>
