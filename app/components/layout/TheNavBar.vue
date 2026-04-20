@@ -48,7 +48,7 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
         <button
           type="button"
           class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
-          :aria-label="`Open command palette (${isMac ? '⌘' : 'Ctrl'}+K)`"
+          :aria-label="`Open command palette (${isMac ? '⌘' : 'Ctrl'} K)`"
           @click="emit('toggle-palette')"
         >{{ isMac ? '⌘' : 'Ctrl' }} K</button>
         <button
