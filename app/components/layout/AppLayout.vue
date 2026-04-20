@@ -3,6 +3,7 @@ import { ref } from "vue";
 import TheNavBar from "./TheNavBar.vue";
 import TheFooter from "./TheFooter.vue";
 import TheCommandPalette from "./TheCommandPalette.vue";
+import ScrollRail from "./ScrollRail.vue";
 import { useCommandKey } from "~/composables/useKeyboard";
 import { useMotionStore } from "~/stores/motion";
 
@@ -18,6 +19,7 @@ if (typeof window !== "undefined") motion.init();
     skip to content
   </a>
   <TheNavBar @toggle-palette="paletteOpen = !paletteOpen" />
+  <ScrollRail />
   <main id="main" class="pt-12">
     <slot />
   </main>
