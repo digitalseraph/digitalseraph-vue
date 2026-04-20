@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SectionReveal from "~/components/primitives/SectionReveal.vue";
 import PostCard from "~/components/primitives/PostCard.vue";
+import SectionKicker from "~/components/primitives/SectionKicker.vue";
 import { stemToSlug } from "~/utils/slug";
 
 const { data: posts } = await useAsyncData("writing-teaser", () =>
@@ -12,7 +13,7 @@ const { data: posts } = await useAsyncData("writing-teaser", () =>
   <SectionReveal class="max-w-[1280px] mx-auto px-8 py-20">
     <div class="flex items-baseline justify-between mb-10">
       <div>
-        <div class="font-mono text-[var(--text-mono)] text-[var(--accent)] mb-2 tracking-[0.2em] uppercase">$ ls writing/</div>
+        <SectionKicker command="ls writing/" />
         <h2 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em]">recent writing</h2>
       </div>
       <NuxtLink to="/writing" class="font-mono text-[var(--text-mono)] text-[var(--text-muted)] hover:text-[var(--accent)]">all posts →</NuxtLink>
