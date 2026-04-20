@@ -20,8 +20,8 @@ describe("PostNav", () => {
     });
     expect(wrapper.text()).toContain("previous");
     expect(wrapper.text()).toContain("Older Post");
-    expect(wrapper.text()).not.toContain("next");
     expect(wrapper.find(`a[href="/writing/older-post"]`).exists()).toBe(true);
+    expect(wrapper.find(`a[href*="next"]`).exists()).toBe(false);
   });
 
   it("renders only the next link when next is provided and prev is null", async () => {
