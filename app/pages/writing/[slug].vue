@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 import PostMetaHeader from "~/components/writing/PostMetaHeader.vue";
 import PostMetaTags from "~/components/writing/PostMetaTags.vue";
 import PostNav from "~/components/writing/PostNav.vue";
 import { readingMinutes } from "~/utils/readingTime";
 import { getPostSiblings } from "~/utils/postNav";
+import { useArrowNav } from "~/composables/useArrowNav";
 
 const route = useRoute();
+const router = useRouter();
 const slug = route.params.slug as string;
 
 const { data: post } = await useAsyncData(`post-${slug}`, () =>
@@ -23,6 +26,15 @@ const { data: allPosts } = await useAsyncData("all-writing-for-nav", () =>
 const siblings = computed(() =>
   getPostSiblings(allPosts.value ?? [], `writing/${slug}`)
 );
+
+useArrowNav({
+  prev: () => {
+    if (siblings.value.prev) router.push(`/writing/${siblings.value.prev.slug}`);
+  },
+  next: () => {
+    if (siblings.value.next) router.push(`/writing/${siblings.value.next.slug}`);
+  },
+});
 
 // @nuxt/content stores body as an AST. JSON.stringify + whitespace-split gives
 // a rough word count sufficient for a "min read" estimate. Swap for an AST

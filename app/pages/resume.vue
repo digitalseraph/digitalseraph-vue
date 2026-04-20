@@ -2,7 +2,14 @@
 import ResumeTerminal from "~/components/resume/ResumeTerminal.vue";
 import ResumePrintView from "~/components/resume/ResumePrintView.vue";
 
-useHead({ title: "Résumé — digitalseraph" });
+useSeoMeta({
+  title: "Résumé — digitalseraph",
+  ogTitle: "Résumé — digitalseraph",
+  ogDescription: "Interactive résumé terminal. Type 'help' to see all commands.",
+  ogImage: "https://digitalseraph.com/og/site.svg",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>

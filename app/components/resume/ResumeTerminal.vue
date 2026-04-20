@@ -144,6 +144,12 @@ async function runIntro() {
   await typeInto(introCmd);
   await new Promise((r) => setTimeout(r, reduced.value ? 0 : 150));
   await runCommand(introCmd);
+
+  await new Promise((r) => setTimeout(r, reduced.value ? 0 : 400));
+  appendEntry("", {
+    kind: "text",
+    text: "[tip: type 'help' for all commands, or try 'grep Vue' · ↑/↓ for history · Tab to complete]",
+  });
 }
 
 const introRan = ref(false);
