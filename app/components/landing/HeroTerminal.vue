@@ -6,6 +6,7 @@ import { useParallax } from "~/composables/useParallax";
 import { useMotionStore } from "~/stores/motion";
 import { useTyping } from "~/composables/useTyping";
 import { storeToRefs } from "pinia";
+import YearsCounter from "./YearsCounter.vue";
 
 const motion = useMotionStore();
 const { reduced } = storeToRefs(motion);
@@ -107,7 +108,7 @@ watch(() => subtitleTyping.done.value, (d) => {
           </div>
           <div class="font-mono text-[var(--text-mono)] text-[var(--text-dim)] min-h-[1.5em]">
             <template v-if="subtitleRevealed">
-              Senior Software Engineer III · <NuxtLink to="/work/01-jump" class="hover:text-[var(--accent)] hover:underline underline-offset-4 transition-colors">Cox Communications</NuxtLink> · 10+ years
+              Senior Software Engineer III · <NuxtLink to="/work/01-jump" class="hover:text-[var(--accent)] hover:underline underline-offset-4 transition-colors">Cox Communications</NuxtLink> · <YearsCounter :to="10" />
             </template>
             <template v-else>
               <span>{{ subtitleTyping.displayed }}</span><span class="inline-block w-[6px] h-[12px] align-[-1px] bg-[var(--accent)] cursor-blink" aria-hidden="true"></span>
