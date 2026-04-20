@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeUnmount } from "vue";
 import GridBackdrop from "~/components/primitives/GridBackdrop.vue";
 import TerminalPrompt from "~/components/primitives/TerminalPrompt.vue";
 import { useParallax } from "~/composables/useParallax";
@@ -21,6 +21,52 @@ const nameVisible = ref(false);
 // Letter arrays for staggered reveal
 const davidLetters = ["d", "a", "v", "i", "d"];
 const millerLetters = ["m", "i", "l", "l", "e", "r"];
+
+// Glitch flicker state
+const glitchLetters = ref<Record<string, string>>({});
+let glitchTimers: ReturnType<typeof setTimeout>[] = [];
+
+const GLITCH_CHARS = "@#$%&*+/\\=~?<>";
+
+function randomGlitchChar() {
+  return GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)] ?? "?";
+}
+
+function glitchWord(letters: string[], prefix: string) {
+  if (reduced.value) return;
+  const perLetterMs = 45;
+  const cycles = 4;
+  letters.forEach((realChar, i) => {
+    const key = `${prefix}-${i}`;
+    for (let c = 0; c < cycles; c++) {
+      const t = setTimeout(() => {
+        glitchLetters.value = { ...glitchLetters.value, [key]: randomGlitchChar() };
+      }, i * 25 + c * perLetterMs);
+      glitchTimers.push(t);
+    }
+    const settle = setTimeout(() => {
+      const next = { ...glitchLetters.value };
+      delete next[key];
+      glitchLetters.value = next;
+    }, i * 25 + cycles * perLetterMs);
+    glitchTimers.push(settle);
+  });
+}
+
+function triggerGlitch() {
+  clearGlitchTimers();
+  glitchWord(davidLetters, "d");
+  setTimeout(() => glitchWord(millerLetters, "m"), 100);
+}
+
+function clearGlitchTimers() {
+  for (const t of glitchTimers) clearTimeout(t);
+  glitchTimers = [];
+}
+
+onBeforeUnmount(() => {
+  clearGlitchTimers();
+});
 
 // When whoami finishes typing, wait then trigger the name reveal.
 watch(
@@ -87,6 +133,7 @@ watch(() => subtitleTyping.done.value, (d) => {
         <h1
           :class="['hero-title text-[clamp(2.5rem,8vw,4.5rem)] font-display font-semibold tracking-[-0.04em] leading-[0.95] text-[var(--text)]', { 'is-revealed': nameVisible }]"
           aria-label="david miller"
+          @mouseenter="triggerGlitch"
         >
           <span aria-hidden="true" class="hero-word">
             <span
@@ -94,7 +141,7 @@ watch(() => subtitleTyping.done.value, (d) => {
               :key="`d-${i}`"
               class="hero-letter"
               :style="{ '--i': i }"
-            >{{ ch }}</span>
+            >{{ glitchLetters[`d-${i}`] ?? ch }}</span>
           </span>
           <span aria-hidden="true" class="hero-word hero-word--accent italic text-[var(--accent)]">
             <span
@@ -102,7 +149,7 @@ watch(() => subtitleTyping.done.value, (d) => {
               :key="`m-${i}`"
               class="hero-letter"
               :style="{ '--i': i + 5 }"
-            >{{ ch }}</span>
+            >{{ glitchLetters[`m-${i}`] ?? ch }}</span>
           </span>
         </h1>
         <div class="mt-6 space-y-2" :style="{ transform: foregroundTransform }">
