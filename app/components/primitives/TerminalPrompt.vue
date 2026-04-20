@@ -11,11 +11,11 @@ const props = withDefaults(
 
 const motion = useMotionStore();
 const { reduced } = storeToRefs(motion);
-const { displayed, start } = useTyping({ text: props.command, speed: props.speed, reduced });
+const { displayed, done, start } = useTyping({ text: props.command, speed: props.speed, reduced });
 
 onMounted(() => { if (props.autoStart) start(); });
 
-defineExpose({ start });
+defineExpose({ start, done });
 </script>
 
 <template>
