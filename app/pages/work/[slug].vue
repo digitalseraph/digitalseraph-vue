@@ -3,7 +3,9 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 import WorkMetaHeader from "~/components/work/WorkMetaHeader.vue";
 import WorkNav from "~/components/work/WorkNav.vue";
+import WorkToc from "~/components/work/WorkToc.vue";
 import { useArrowNav } from "~/composables/useArrowNav";
+import { extractHeadings } from "~/utils/extractHeadings";
 
 const route = useRoute();
 const router = useRouter();
@@ -23,7 +25,7 @@ const { data: allProjects } = await useAsyncData("all-work-for-nav", () =>
 const siblings = computed(() => {
   const list = allProjects.value ?? [];
   const idx = list.findIndex((p) => p.stem === `work/${slug}`);
-  const toRef = (p: (typeof list)[number] | undefined) =>
+  const toRef = (p: typeof list[number] | undefined) =>
     p ? { slug: p.stem.replace(/^work\//, ""), title: p.title } : null;
   return {
     prev: toRef(list[idx + 1]),
@@ -31,13 +33,11 @@ const siblings = computed(() => {
   };
 });
 
+const headings = computed(() => extractHeadings(project.value?.body));
+
 useArrowNav({
-  prev: () => {
-    if (siblings.value.prev) router.push(`/work/${siblings.value.prev.slug}`);
-  },
-  next: () => {
-    if (siblings.value.next) router.push(`/work/${siblings.value.next.slug}`);
-  },
+  prev: () => { if (siblings.value.prev) router.push(`/work/${siblings.value.prev.slug}`); },
+  next: () => { if (siblings.value.next) router.push(`/work/${siblings.value.next.slug}`); },
 });
 
 useSeoMeta({
@@ -52,12 +52,22 @@ useSeoMeta({
 </script>
 
 <template>
-  <article v-if="project" class="max-w-2xl mx-auto px-8 py-24">
-    <h1 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em] mb-6">{{ project.title }}</h1>
-    <WorkMetaHeader :year="project.year" :role="project.role" :stack="project.stack" />
-    <div class="prose prose-invert max-w-none mt-8">
-      <ContentRenderer :value="project" />
+  <section v-if="project" class="max-w-[1280px] mx-auto px-6 md:px-8 py-24">
+    <div class="lg:grid lg:grid-cols-[minmax(0,65ch)_240px] lg:gap-12">
+      <article class="min-w-0">
+        <h1 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em] mb-6">{{ project.title }}</h1>
+        <WorkMetaHeader :year="project.year" :role="project.role" :stack="project.stack" />
+        <div class="prose prose-invert max-w-none mt-8">
+          <ContentRenderer :value="project" />
+        </div>
+        <WorkNav class="mt-16" :prev="siblings.prev" :next="siblings.next" />
+      </article>
+
+      <div class="hidden lg:block">
+        <div class="sticky top-20">
+          <WorkToc :headings="headings" />
+        </div>
+      </div>
     </div>
-    <WorkNav class="mt-16" :prev="siblings.prev" :next="siblings.next" />
-  </article>
+  </section>
 </template>
