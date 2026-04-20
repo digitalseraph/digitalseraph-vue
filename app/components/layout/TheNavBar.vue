@@ -2,12 +2,14 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useThemeStore } from "~/stores/theme";
 import { useIsMac } from "~/composables/useIsMac";
+import TheMobileNav from "./TheMobileNav.vue";
 
 const theme = useThemeStore();
 const isMac = useIsMac();
 const emit = defineEmits<{ (e: "toggle-palette"): void }>();
 
 const hidden = ref(false);
+const mobileNavOpen = ref(false);
 let lastY = 0;
 
 function onScroll() {
@@ -32,11 +34,12 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
     ]"
     aria-label="Primary"
   >
-    <div class="max-w-[1280px] mx-auto px-8 h-12 flex items-center justify-between font-mono text-[var(--text-mono)]">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-8 h-12 flex items-center justify-between font-mono text-[var(--text-mono)]">
       <NuxtLink to="/" class="flex items-center gap-2">
         <span class="text-[var(--accent)]">~/digitalseraph.com</span>
         <span class="text-[var(--text-dim)]">❯</span>
       </NuxtLink>
+
       <ul class="hidden md:flex items-center gap-5 text-[var(--text-muted)]">
         <li><NuxtLink to="/about" class="hover:text-[var(--accent)] transition-colors">about</NuxtLink></li>
         <li><NuxtLink to="/work" class="hover:text-[var(--accent)] transition-colors">work</NuxtLink></li>
@@ -44,16 +47,17 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
         <li><NuxtLink to="/writing" class="hover:text-[var(--accent)] transition-colors">writing</NuxtLink></li>
         <li><NuxtLink to="/contact" class="hover:text-[var(--accent)] transition-colors">contact</NuxtLink></li>
       </ul>
+
       <div class="flex items-center gap-3">
         <button
           type="button"
-          class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
+          class="hidden md:inline-block text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
           :aria-label="`Open command palette (${isMac ? '⌘' : 'Ctrl'} K)`"
           @click="emit('toggle-palette')"
         >{{ isMac ? '⌘' : 'Ctrl' }} K</button>
         <button
           type="button"
-          class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
+          class="hidden md:inline-block text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
           :aria-label="`Switch to ${theme.mode === 'dark' ? 'light' : 'dark'} mode`"
           :aria-pressed="theme.mode === 'light'"
           @click="theme.toggle()"
@@ -61,7 +65,16 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
           <span v-if="theme.mode === 'dark'" aria-hidden="true">○</span>
           <span v-else aria-hidden="true">●</span>
         </button>
+        <button
+          type="button"
+          class="md:hidden text-[var(--accent)] hover:underline underline-offset-4 py-1.5 px-2 min-h-[24px]"
+          :aria-expanded="mobileNavOpen"
+          aria-label="Open navigation menu"
+          @click="mobileNavOpen = true"
+        >$ menu</button>
       </div>
     </div>
   </nav>
+
+  <TheMobileNav :open="mobileNavOpen" @close="mobileNavOpen = false" />
 </template>
