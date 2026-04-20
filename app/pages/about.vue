@@ -18,7 +18,7 @@ useSeoMeta({
     <h1 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em] mb-12">about</h1>
 
     <div class="grid lg:grid-cols-[1fr_300px] gap-12">
-      <article class="prose prose-invert max-w-none min-w-0">
+      <article class="prose prose-invert min-w-0 max-w-[70ch]">
         <ContentRenderer v-if="about" :value="about" />
       </article>
 

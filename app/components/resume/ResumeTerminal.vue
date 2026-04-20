@@ -145,11 +145,17 @@ async function runIntro() {
   await new Promise((r) => setTimeout(r, reduced.value ? 0 : 150));
   await runCommand(introCmd);
 
-  await new Promise((r) => setTimeout(r, reduced.value ? 0 : 400));
-  appendEntry("", {
-    kind: "text",
-    text: "[tip: type 'help' for all commands, or try 'grep Vue' · ↑/↓ for history · Tab to complete]",
-  });
+  if (typeof window !== "undefined") {
+    const key = "ds-terminal-tip-seen";
+    if (!window.sessionStorage.getItem(key)) {
+      await new Promise((r) => setTimeout(r, reduced.value ? 0 : 400));
+      appendEntry("", {
+        kind: "text",
+        text: "[tip: type 'help' for all commands, or try 'grep Vue' · ↑/↓ for history · Tab to complete]",
+      });
+      window.sessionStorage.setItem(key, "1");
+    }
+  }
 }
 
 const introRan = ref(false);
