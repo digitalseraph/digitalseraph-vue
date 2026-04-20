@@ -28,6 +28,13 @@ export const useThemeStore = defineStore("theme", {
       }
       this.apply();
     },
+    setMode(mode: ThemeMode) {
+      this.mode = mode;
+      if (typeof window !== "undefined") {
+        localStorage.setItem(STORAGE_KEY, this.mode);
+      }
+      this.apply();
+    },
     apply() {
       if (typeof document === "undefined") return;
       if (this.mode === "light") {

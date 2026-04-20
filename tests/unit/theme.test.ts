@@ -39,4 +39,17 @@ describe("theme store", () => {
     expect(localStorage.getItem("ds-theme")).toBe("light");
     expect(document.documentElement.dataset.theme).toBe("light");
   });
+
+  it("setMode sets mode, persists, and applies", () => {
+    const store = useThemeStore();
+    store.setMode("light");
+    expect(store.mode).toBe("light");
+    expect(localStorage.getItem("ds-theme")).toBe("light");
+    expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+
+    store.setMode("dark");
+    expect(store.mode).toBe("dark");
+    expect(localStorage.getItem("ds-theme")).toBe("dark");
+    expect(document.documentElement.hasAttribute("data-theme")).toBe(false);
+  });
 });

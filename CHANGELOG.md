@@ -5,6 +5,25 @@ All notable changes to digitalseraph.com are recorded here.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/).
 This is a continuously-deployed static site, not a versioned library, so entries are grouped by date rather than by semver.
 
+## 2026-04-19 — Résumé terminal enhancements (Plan 5)
+
+### Added
+- Real-shell UX on `/resume` — command history (↑/↓), Tab completion, bash-style `command not found` errors, and a richer `user<random>@digitalseraph:~$` prompt (random 5-digit user id persisted in `sessionStorage`) ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- 12 new terminal commands: `ls`, `ls projects/`, `ls writing/`, `cat projects/<slug>.md`, `cat writing/<slug>.md`, `grep <term>`, `date`, `uname [-a]`, `echo`, `sudo`, `exit` / `logout`, `theme [light|dark]` ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- Four new output components — `DirectoryListing`, `ProjectPreview`, `PostPreview`, `GrepResults`; `HelpBlock` regrouped into three labeled sections (sections / filesystem / shell) ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- Two new composables — `useRandomUsername` (SSR-safe, `sessionStorage`-backed) and `useTerminalHistory` (pure `up`/`down`/`reset` state machine over a `Ref<string[]>`); pure `tabComplete.getCompletions` utility with path-aware completion for `cat projects/`, `cat writing/`, and `ls ` ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- `setMode(mode)` action on the theme store for deterministic theme flips (used by the new `theme` command) ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- Dedicated XSS-guard unit test — `echo <script>alert(1)</script>` returns a text `OutputEntry`, never a component-with-html one ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- +24 tests (16 unit + 4 component + 4 E2E), landing at 109 unit / 18 E2E ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+
+### Changed
+- Résumé dispatcher rewritten around a pure `dispatchCommand(parsed, ctx) → OutputEntry` signature with a handler table; new `navigate` / `theme` / `print` side-effect kinds replace the previous inline `window.print()` call — the orchestrator now owns every side effect ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- Unknown-command output switched from `command not found: <cmd>. try 'help'.` to the canonical `bash: <cmd>: command not found` ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+- `pdf` command no longer calls `window.print()` directly inside the dispatcher — it returns `{ kind: "print" }` which the orchestrator executes, keeping the dispatcher fully pure ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+
+### Fixed
+- `grep` handler crashed on null `excerpt` fields returned by Nuxt Content for writing posts — all grep-loop field accesses now null-guarded and `PostRef.excerpt` typed as `string | null` ([#12](https://github.com/digitalseraph/digitalseraph-vue/pull/12))
+
 ## 2026-04-19 — Content + voice
 
 ### Added

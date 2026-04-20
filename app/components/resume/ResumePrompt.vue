@@ -1,26 +1,65 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, toRef } from "vue";
+import { useTerminalHistory } from "~/composables/useTerminalHistory";
+import { getCompletions } from "~/utils/tabComplete";
 
 const props = defineProps<{
   modelValue: string;
   disabled?: boolean;
+  username?: string;
+  history?: string[];
+  commands?: string[];
+  projectSlugs?: string[];
+  postSlugs?: string[];
 }>();
 
 const emit = defineEmits<{
   (e: "update:modelValue", v: string): void;
   (e: "submit", v: string): void;
+  (e: "candidates", v: string[]): void;
 }>();
 
 const inputEl = ref<HTMLInputElement | null>(null);
+
+const historyRef = toRef(() => props.history ?? []);
+const nav = useTerminalHistory(historyRef);
 
 function focus() {
   inputEl.value?.focus();
 }
 
-function onEnter(e: KeyboardEvent) {
+function onKey(e: KeyboardEvent) {
   if (e.key === "Enter") {
     e.preventDefault();
+    nav.reset();
     emit("submit", props.modelValue);
+    return;
+  }
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+    nav.up();
+    emit("update:modelValue", nav.currentEntry.value ?? "");
+    return;
+  }
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    nav.down();
+    emit("update:modelValue", nav.currentEntry.value ?? "");
+    return;
+  }
+  if (e.key === "Tab") {
+    e.preventDefault();
+    const { completion, candidates } = getCompletions(props.modelValue, {
+      commands: props.commands ?? [],
+      projects: props.projectSlugs ?? [],
+      posts: props.postSlugs ?? [],
+    });
+    if (completion !== null) {
+      emit("update:modelValue", completion);
+    } else if (candidates.length > 0) {
+      emit("candidates", candidates);
+    }
+    return;
   }
 }
 
@@ -32,12 +71,12 @@ defineExpose({ focus });
 
 <template>
   <div class="flex items-center gap-2 font-mono text-[var(--text-mono-l)] border-t border-[var(--line)] pt-3">
-    <span class="text-[var(--accent)] select-none">$</span>
+    <span class="select-none"><span class="text-[var(--accent)]">{{ username || "user" }}</span><span class="text-[var(--text-muted)]">@digitalseraph</span><span class="text-[var(--text-dim)]">:</span><span class="text-[var(--text-muted)]">~</span><span class="text-[var(--accent)]">$</span></span>
     <input
       ref="inputEl"
       :value="modelValue"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      @keydown="onEnter"
+      @keydown="onKey"
       :disabled="disabled"
       type="text"
       autocomplete="off"
