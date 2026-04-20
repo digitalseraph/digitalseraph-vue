@@ -10,6 +10,41 @@ useSeoMeta({
   ogType: "website",
   twitterCard: "summary_large_image",
 });
+useHead({
+  title: `About — digitalseraph`,
+  script: [
+    {
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "David Miller",
+        url: "https://digitalseraph.com",
+        image: "https://digitalseraph.com/og/site.svg",
+        jobTitle: "Senior Software Engineer III",
+        worksFor: {
+          "@type": "Organization",
+          name: "Cox Communications",
+        },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Marietta",
+          addressRegion: "GA",
+          addressCountry: "US",
+        },
+        email: "mailto:hello@digitalseraph.com",
+        sameAs: [
+          "https://github.com/digitalseraph",
+          "https://www.linkedin.com/in/davidthedeveloper",
+        ],
+        knowsAbout: [
+          "Vue.js", "TypeScript", "PHP", "Laravel",
+          "AWS", "Kubernetes", "Docker", "Node.js", "React",
+        ],
+      }),
+    },
+  ],
+});
 </script>
 
 <template>
