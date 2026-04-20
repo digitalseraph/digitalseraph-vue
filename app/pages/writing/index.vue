@@ -26,6 +26,12 @@ useSeoMeta({
   ogType: "website",
   twitterCard: "summary_large_image",
 });
+
+useHead({
+  link: [
+    { rel: "alternate", type: "application/rss+xml", title: "digitalseraph writing", href: "/feed.xml" },
+  ],
+});
 </script>
 
 <template>

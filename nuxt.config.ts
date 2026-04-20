@@ -82,7 +82,7 @@ export default defineNuxtConfig({
     preset: "static",
     prerender: {
       crawlLinks: true,
-      routes: ["/"],
+      routes: ["/", "/feed.xml", "/sitemap.xml"],
     },
   },
 });
