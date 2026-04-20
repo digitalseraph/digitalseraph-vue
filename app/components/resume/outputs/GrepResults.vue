@@ -1,9 +1,5 @@
 <script setup lang="ts">
-interface GrepMatch {
-  source: string;
-  snippet: string;
-  link?: string;
-}
+import type { GrepMatch } from "~/utils/resumeDispatcher";
 
 const props = defineProps<{ term: string; matches: GrepMatch[] }>();
 

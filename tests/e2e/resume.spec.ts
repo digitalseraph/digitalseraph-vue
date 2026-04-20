@@ -86,7 +86,9 @@ test.describe("résumé terminal", () => {
     const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
     await input.fill("ls projects/");
     await input.press("Enter");
-    await expect(terminal(page).getByText(/01-jump\.md/)).toBeVisible();
+    for (const slug of ["01-jump", "02-thrivee", "03-gofan", "04-trpz", "05-editorial"]) {
+      await expect(terminal(page).getByText(new RegExp(`${slug}\\.md`))).toBeVisible();
+    }
   });
 
   test("grep Vue returns at least one highlighted match", async ({ page }) => {

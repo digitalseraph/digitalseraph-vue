@@ -111,10 +111,9 @@ async function runCommand(cmd: string) {
   history.value = [...history.value, parsed.raw];
 
   const output = dispatchCommand(parsed, ctx);
+  if (output === null) return; // Narrows type; empty-cmd is already returned above.
 
-  if (output === null) {
-    // no-op
-  } else if (output.kind === "clear") {
+  if (output.kind === "clear") {
     buffer.value = [];
   } else if (output.kind === "navigate") {
     router.push(output.path);

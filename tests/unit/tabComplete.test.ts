@@ -56,4 +56,12 @@ describe("getCompletions", () => {
     const r = getCompletions("WHO", ctx);
     expect(r.completion).toBe("whoami");
   });
+
+  it("lists the three ls directory variants for 'ls '", () => {
+    const r = getCompletions("ls ", ctx);
+    expect(r.completion).toBeNull();
+    expect(r.candidates).toEqual(expect.arrayContaining([
+      "ls skills/", "ls projects/", "ls writing/",
+    ]));
+  });
 });
