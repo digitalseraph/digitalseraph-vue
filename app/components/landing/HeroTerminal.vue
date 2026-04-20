@@ -27,7 +27,7 @@ const { transform: foregroundTransform } = useParallax({ speed: 1.2, reduced });
             Full-Stack · Cloud · DevOps
           </div>
           <div class="font-mono text-[var(--text-mono)] text-[var(--text-dim)]">
-            Senior Software Engineer III · Cox Communications · 10+ years
+            Senior Software Engineer III · <NuxtLink to="/work/01-jump" class="hover:text-[var(--accent)] hover:underline underline-offset-4 transition-colors">Cox Communications</NuxtLink> · 10+ years
           </div>
         </div>
       </div>
