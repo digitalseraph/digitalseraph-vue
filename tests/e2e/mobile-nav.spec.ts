@@ -10,6 +10,7 @@ test.describe("mobile navigation", () => {
 
   test("tapping menu opens the drawer with nav links", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     const trigger = page.getByRole("button", { name: /open navigation menu/i });
     await trigger.click();
     const drawer = page.getByRole("dialog", { name: /site navigation/i });
@@ -22,6 +23,7 @@ test.describe("mobile navigation", () => {
 
   test("Escape closes the drawer and returns focus to trigger", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     const trigger = page.getByRole("button", { name: /open navigation menu/i });
     await trigger.click();
     await expect(page.getByRole("dialog")).toBeVisible();
@@ -32,6 +34,7 @@ test.describe("mobile navigation", () => {
 
   test("clicking the $ exit button closes the drawer", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     await page.getByRole("button", { name: /open navigation menu/i }).click();
     await page.getByRole("button", { name: /close navigation/i }).click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
@@ -39,9 +42,10 @@ test.describe("mobile navigation", () => {
 
   test("route navigation from the drawer closes it", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     await page.getByRole("button", { name: /open navigation menu/i }).click();
     const drawer = page.getByRole("dialog");
-    await drawer.getByRole("link", { name: /^about$/i }).click();
+    await drawer.getByRole("link", { name: /about/i }).first().click();
     await expect(page).toHaveURL(/\/about$/);
     await expect(page.getByRole("dialog")).toHaveCount(0);
   });
