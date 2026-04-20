@@ -76,6 +76,16 @@ useHead(() => ({
       ]
     : [],
 }));
+
+useSeoMeta({
+  title: () => post.value ? `${post.value.title} — digitalseraph` : "digitalseraph",
+  description: () => post.value?.excerpt ?? "",
+  ogTitle: () => post.value ? `${post.value.title} — digitalseraph` : "digitalseraph",
+  ogDescription: () => post.value?.excerpt ?? "",
+  ogImage: "https://digitalseraph.com/og/writing.svg",
+  ogType: "article",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>
