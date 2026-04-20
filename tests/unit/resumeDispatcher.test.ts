@@ -217,6 +217,37 @@ describe("dispatchCommand — ls (no args)", () => {
   });
 });
 
+describe("dispatchCommand — cat projects/<slug>.md", () => {
+  const withProjects: DispatchContext = {
+    ...ctx,
+    projects: [
+      { slug: "01-jump", title: "Jump", year: 2026, stack: [], summary: "" },
+    ],
+  };
+
+  it("known slug returns ProjectPreview with slug prop", () => {
+    expect(dispatchCommand(parseInput("cat projects/01-jump.md"), withProjects)).toEqual({
+      kind: "component",
+      name: "ProjectPreview",
+      props: { slug: "01-jump" },
+    });
+  });
+
+  it("unknown slug returns bash-style 'No such file or directory'", () => {
+    expect(dispatchCommand(parseInput("cat projects/bogus.md"), withProjects)).toEqual({
+      kind: "text",
+      text: "cat: projects/bogus.md: No such file or directory",
+    });
+  });
+
+  it("missing .md extension is treated as not found", () => {
+    expect(dispatchCommand(parseInput("cat projects/01-jump"), withProjects)).toEqual({
+      kind: "text",
+      text: "cat: projects/01-jump: No such file or directory",
+    });
+  });
+});
+
 describe("dispatchCommand — ls projects/ and ls writing/", () => {
   const withContent: DispatchContext = {
     ...ctx,

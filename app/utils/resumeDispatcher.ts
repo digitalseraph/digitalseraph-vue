@@ -91,10 +91,24 @@ const handlers: Record<string, Handler> = {
     return { kind: "text", text: `theme: invalid mode '${arg}'. valid modes: light, dark` };
   },
   cat: (parsed, ctx) => {
-    const path = (parsed.args[0] ?? "").toLowerCase();
+    const rawPath = parsed.args[0] ?? "";
+    const path = rawPath.toLowerCase();
     if (path === "summary.md") return { kind: "text", text: ctx.resume.summary };
     if (path === "experience.md") return { kind: "component", name: "ExperienceList" };
     if (path === "education.md") return { kind: "component", name: "EducationBlock" };
+
+    const projectsMatch = /^projects\/(.+)\.md$/.exec(path);
+    if (projectsMatch) {
+      const slug = projectsMatch[1]!;
+      const found = ctx.projects.find((p) => p.slug.toLowerCase() === slug);
+      if (found) return { kind: "component", name: "ProjectPreview", props: { slug: found.slug } };
+      return { kind: "text", text: `cat: projects/${slug}.md: No such file or directory` };
+    }
+
+    if (path.startsWith("projects/")) {
+      return { kind: "text", text: `cat: ${rawPath}: No such file or directory` };
+    }
+
     return unknown(parsed);
   },
   ls: (parsed, ctx) => {
