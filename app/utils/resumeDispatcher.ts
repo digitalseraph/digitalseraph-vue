@@ -33,7 +33,7 @@ export interface PostRef {
   slug: string;
   title: string;
   date: string;
-  excerpt: string;
+  excerpt: string | null;
 }
 
 export interface GrepMatch {
@@ -140,37 +140,41 @@ const handlers: Record<string, Handler> = {
     const matches: GrepMatch[] = [];
 
     for (const role of ctx.resume.experience) {
-      role.bullets.forEach((bullet, i) => {
-        if (bullet.toLowerCase().includes(needle)) {
+      (role.bullets ?? []).forEach((bullet, i) => {
+        if (bullet != null && bullet.toLowerCase().includes(needle)) {
           matches.push({ source: `experience/${role.company}/${i}`, snippet: bullet });
         }
       });
     }
 
     for (const group of ctx.resume.skills) {
-      for (const item of group.items) {
-        if (item.toLowerCase().includes(needle)) {
+      for (const item of (group.items ?? [])) {
+        if (item != null && item.toLowerCase().includes(needle)) {
           matches.push({ source: `skills/${group.group}/${item}`, snippet: item });
         }
       }
     }
 
     for (const p of ctx.projects) {
-      const stackHit = p.stack.some((s) => s.toLowerCase().includes(needle));
-      if (p.title.toLowerCase().includes(needle) || p.summary.toLowerCase().includes(needle) || stackHit) {
+      const stackHit = (p.stack ?? []).some((s) => s != null && s.toLowerCase().includes(needle));
+      const titleHit = p.title != null && p.title.toLowerCase().includes(needle);
+      const summaryHit = p.summary != null && p.summary.toLowerCase().includes(needle);
+      if (titleHit || summaryHit || stackHit) {
         matches.push({
           source: `projects/${p.slug}`,
-          snippet: `${p.title} — ${p.summary}`,
+          snippet: `${p.title ?? ""} — ${p.summary ?? ""}`,
           link: `/work/${p.slug}`,
         });
       }
     }
 
     for (const p of ctx.posts) {
-      if (p.title.toLowerCase().includes(needle) || p.excerpt.toLowerCase().includes(needle)) {
+      const titleHit = p.title != null && p.title.toLowerCase().includes(needle);
+      const excerptHit = p.excerpt != null && p.excerpt.toLowerCase().includes(needle);
+      if (titleHit || excerptHit) {
         matches.push({
           source: `writing/${p.slug}`,
-          snippet: `${p.title} — ${p.excerpt}`,
+          snippet: `${p.title ?? ""} — ${p.excerpt ?? ""}`,
           link: `/writing/${p.slug}`,
         });
       }

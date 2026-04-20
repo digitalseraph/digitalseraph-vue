@@ -41,13 +41,13 @@ test.describe("résumé terminal", () => {
     await expect(terminal(page).getByText("hello@digitalseraph.com").first()).toBeVisible();
   });
 
-  test("unknown command shows 'command not found'", async ({ page }) => {
+  test("unknown command shows bash-style 'command not found'", async ({ page }) => {
     await page.goto("/resume");
-    await page.waitForTimeout(1200);
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
     const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
     await input.fill("foobar");
     await input.press("Enter");
-    await expect(terminal(page).getByText(/command not found: foobar/)).toBeVisible();
+    await expect(terminal(page).getByText(/bash: foobar: command not found/)).toBeVisible();
   });
 
   test("clear empties the buffer", async ({ page }) => {
@@ -78,5 +78,49 @@ test.describe("résumé terminal", () => {
     // No 1200ms wait — intro should be instant
     await page.waitForTimeout(400);
     await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+  });
+
+  test("ls projects/ lists all project slugs", async ({ page }) => {
+    await page.goto("/resume");
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
+    await input.fill("ls projects/");
+    await input.press("Enter");
+    await expect(terminal(page).getByText(/01-jump\.md/)).toBeVisible();
+  });
+
+  test("grep Vue returns at least one highlighted match", async ({ page }) => {
+    await page.goto("/resume");
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
+    await input.fill("grep Vue");
+    await input.press("Enter");
+    await expect(terminal(page).locator("mark").first()).toBeVisible();
+  });
+
+  test("theme light flips <html> data-theme and persists through a reload", async ({ page }) => {
+    await page.goto("/resume");
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
+    await input.fill("theme light");
+    await input.press("Enter");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    // Reset so later tests don't inherit light mode
+    const input2 = page.getByRole("textbox", { name: /resume terminal prompt/i });
+    await input2.fill("theme dark");
+    await input2.press("Enter");
+  });
+
+  test("ArrowUp recalls the most recent command", async ({ page }) => {
+    await page.goto("/resume");
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
+    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
+    await input.fill("contact");
+    await input.press("Enter");
+    await expect(terminal(page).getByText("hello@digitalseraph.com").first()).toBeVisible();
+    await input.press("ArrowUp");
+    await expect(input).toHaveValue("contact");
   });
 });
