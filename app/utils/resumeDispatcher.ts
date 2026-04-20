@@ -82,6 +82,12 @@ const handlers: Record<string, Handler> = {
   }),
   exit: () => ({ kind: "navigate", path: "/" }),
   logout: () => ({ kind: "navigate", path: "/" }),
+  theme: (parsed, ctx) => {
+    const arg = (parsed.args[0] ?? "").toLowerCase();
+    if (arg === "") return { kind: "text", text: `current theme: ${ctx.themeMode}` };
+    if (arg === "light" || arg === "dark") return { kind: "theme", mode: arg };
+    return { kind: "text", text: `theme: invalid mode '${arg}'. valid modes: light, dark` };
+  },
   cat: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "summary.md") return { kind: "text", text: ctx.resume.summary };

@@ -176,3 +176,26 @@ describe("dispatchCommand — exit/logout", () => {
     expect(dispatchCommand(parseInput("logout"), ctx)).toEqual({ kind: "navigate", path: "/" });
   });
 });
+
+describe("dispatchCommand — theme", () => {
+  it("theme with no args returns current mode text", () => {
+    expect(dispatchCommand(parseInput("theme"), ctx)).toEqual({
+      kind: "text", text: "current theme: dark",
+    });
+  });
+
+  it("theme light returns theme kind with mode=light", () => {
+    expect(dispatchCommand(parseInput("theme light"), ctx)).toEqual({ kind: "theme", mode: "light" });
+  });
+
+  it("theme dark returns theme kind with mode=dark", () => {
+    expect(dispatchCommand(parseInput("theme dark"), ctx)).toEqual({ kind: "theme", mode: "dark" });
+  });
+
+  it("theme <bogus> returns an invalid-mode text entry", () => {
+    expect(dispatchCommand(parseInput("theme neon"), ctx)).toEqual({
+      kind: "text",
+      text: "theme: invalid mode 'neon'. valid modes: light, dark",
+    });
+  });
+});
