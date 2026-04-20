@@ -351,6 +351,67 @@ describe("dispatchCommand — grep", () => {
   });
 });
 
+describe("dispatchCommand — open", () => {
+  const withContent: DispatchContext = {
+    ...ctx,
+    projects: [
+      { slug: "01-jump", title: "Jump", year: 2026, stack: [], summary: "" },
+    ],
+    posts: [
+      { slug: "hello-world", title: "Hello", date: "2026-03-12", excerpt: "" },
+    ],
+  };
+
+  it("open with no args returns usage text", () => {
+    expect(dispatchCommand(parseInput("open"), withContent)).toEqual({
+      kind: "text",
+      text: "open: missing path. usage: open <path>",
+    });
+  });
+
+  it("open projects/<slug> navigates to /work/<slug>", () => {
+    expect(dispatchCommand(parseInput("open projects/01-jump"), withContent)).toEqual({
+      kind: "navigate",
+      path: "/work/01-jump",
+    });
+  });
+
+  it("open projects/<slug>.md also navigates (trailing .md tolerated)", () => {
+    expect(dispatchCommand(parseInput("open projects/01-jump.md"), withContent)).toEqual({
+      kind: "navigate",
+      path: "/work/01-jump",
+    });
+  });
+
+  it("open writing/<slug> navigates to /writing/<slug>", () => {
+    expect(dispatchCommand(parseInput("open writing/hello-world"), withContent)).toEqual({
+      kind: "navigate",
+      path: "/writing/hello-world",
+    });
+  });
+
+  it("open /about navigates directly to /about (leading slash)", () => {
+    expect(dispatchCommand(parseInput("open /about"), withContent)).toEqual({
+      kind: "navigate",
+      path: "/about",
+    });
+  });
+
+  it("open projects/bogus returns bash-style No such file or directory", () => {
+    expect(dispatchCommand(parseInput("open projects/bogus"), withContent)).toEqual({
+      kind: "text",
+      text: "open: projects/bogus: No such file or directory",
+    });
+  });
+
+  it("open writing/bogus returns bash-style error", () => {
+    expect(dispatchCommand(parseInput("open writing/bogus"), withContent)).toEqual({
+      kind: "text",
+      text: "open: writing/bogus: No such file or directory",
+    });
+  });
+});
+
 describe("dispatchCommand — ls projects/ and ls writing/", () => {
   const withContent: DispatchContext = {
     ...ctx,

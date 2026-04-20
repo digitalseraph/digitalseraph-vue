@@ -128,3 +128,40 @@
   font-weight: 700;
   font-display: swap;
 }
+
+@media print {
+  /* Force-invert the whole site for readable printing. /resume has its own
+     dedicated print view (.print-view) and opts out of this rule via the
+     body-level override in ResumePage. */
+  :root {
+    --canvas: #ffffff;
+    --canvas-raised: #fafafa;
+    --text: #0a0a0a;
+    --text-muted: #333333;
+    --text-dim: #525252;
+    --line: rgba(0, 0, 0, 0.15);
+    --accent: #15803d;
+    --grid-line: rgba(0, 0, 0, 0.04);
+    color-scheme: light;
+  }
+  nav, aside[aria-label="On this page"], footer, .cursor-blink {
+    display: none !important;
+  }
+  main {
+    padding-top: 0 !important;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: underline !important;
+  }
+  /* Show the target URL after inline links, but skip mailto and fragment links */
+  a:not([href^="#"]):not([href^="mailto:"])::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #525252;
+  }
+  img, svg {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}
