@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useThemeStore } from "~/stores/theme";
+import { useIsMac } from "~/composables/useIsMac";
 
 const theme = useThemeStore();
+const isMac = useIsMac();
 const emit = defineEmits<{ (e: "toggle-palette"): void }>();
 
 const hidden = ref(false);
@@ -46,9 +48,9 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
         <button
           type="button"
           class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
-          aria-label="Open command palette (⌘K)"
+          :aria-label="`Open command palette (${isMac ? '⌘' : 'Ctrl'}+K)`"
           @click="emit('toggle-palette')"
-        >⌘K</button>
+        >{{ isMac ? '⌘' : 'Ctrl' }} K</button>
         <button
           type="button"
           class="text-[var(--text-dim)] hover:text-[var(--accent)] transition-colors"
