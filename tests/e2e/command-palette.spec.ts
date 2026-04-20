@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("command palette", () => {
   test("opens with Ctrl+K (Cmd+K on Mac) and closes with Escape", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     const accel = process.platform === "darwin" ? "Meta" : "Control";
     await page.keyboard.press(`${accel}+K`);
     const palette = page.getByRole("dialog", { name: /command palette/i });
@@ -15,6 +16,7 @@ test.describe("command palette", () => {
 
   test("arrow keys change selection, Enter navigates", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     const accel = process.platform === "darwin" ? "Meta" : "Control";
     await page.keyboard.press(`${accel}+K`);
     const palette = page.getByRole("dialog", { name: /command palette/i });
@@ -29,9 +31,11 @@ test.describe("command palette", () => {
 
   test("typing a project title filters to that project", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     const accel = process.platform === "darwin" ? "Meta" : "Control";
     await page.keyboard.press(`${accel}+K`);
     const palette = page.getByRole("dialog", { name: /command palette/i });
+    await expect(palette).toBeVisible();
     await palette.getByRole("textbox").fill("jump");
     // Jump project should be a filtered result
     await expect(palette.getByText("Jump")).toBeVisible();
@@ -41,6 +45,7 @@ test.describe("command palette", () => {
 
   test("empty query shows all entries including projects", async ({ page }) => {
     await page.goto("/");
+    await page.waitForLoadState("networkidle");
     const accel = process.platform === "darwin" ? "Meta" : "Control";
     await page.keyboard.press(`${accel}+K`);
     const palette = page.getByRole("dialog", { name: /command palette/i });
