@@ -2,7 +2,14 @@
 const { data: about } = await useAsyncData("about", () =>
   queryCollection("about").first()
 );
-useHead({ title: `About — digitalseraph` });
+useSeoMeta({
+  title: "About — digitalseraph",
+  ogTitle: "About — digitalseraph",
+  ogDescription: "Senior Full-Stack Engineer with 10+ years across healthcare, fintech, e-commerce, and media. HIPAA-certified.",
+  ogImage: "https://digitalseraph.com/og/site.svg",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>

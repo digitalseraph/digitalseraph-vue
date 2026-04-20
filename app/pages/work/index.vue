@@ -6,7 +6,14 @@ const { data: projects } = await useAsyncData("all-work", () =>
   queryCollection("work").order("year", "DESC").all()
 );
 
-useHead({ title: "Work — digitalseraph" });
+useSeoMeta({
+  title: "Work — digitalseraph",
+  ogTitle: "Work — digitalseraph",
+  ogDescription: "Selected production work — platforms, migrations, and in-house builds replacing expensive SaaS.",
+  ogImage: "https://digitalseraph.com/og/site.svg",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>

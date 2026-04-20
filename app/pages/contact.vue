@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import CopyInline from "~/components/primitives/CopyInline.vue";
 import PillLink from "~/components/primitives/PillLink.vue";
-useHead({ title: "Contact — digitalseraph" });
+useSeoMeta({
+  title: "Contact — digitalseraph",
+  ogTitle: "Contact — digitalseraph",
+  ogDescription: "Get in touch — email, GitHub, LinkedIn. Response within 2 business days.",
+  ogImage: "https://digitalseraph.com/og/site.svg",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>
