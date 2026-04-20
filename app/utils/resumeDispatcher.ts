@@ -110,6 +110,18 @@ const handlers: Record<string, Handler> = {
       return { kind: "text", text: `cat: ${rawPath}: No such file or directory` };
     }
 
+    const writingMatch = /^writing\/(.+)\.md$/.exec(path);
+    if (writingMatch) {
+      const slug = writingMatch[1]!;
+      const found = ctx.posts.find((p) => p.slug.toLowerCase() === slug);
+      if (found) return { kind: "component", name: "PostPreview", props: { slug: found.slug } };
+      return { kind: "text", text: `cat: writing/${slug}.md: No such file or directory` };
+    }
+
+    if (path.startsWith("writing/")) {
+      return { kind: "text", text: `cat: ${rawPath}: No such file or directory` };
+    }
+
     return unknown(parsed);
   },
   ls: (parsed, ctx) => {

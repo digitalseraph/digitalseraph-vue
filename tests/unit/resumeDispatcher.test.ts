@@ -248,6 +248,30 @@ describe("dispatchCommand — cat projects/<slug>.md", () => {
   });
 });
 
+describe("dispatchCommand — cat writing/<slug>.md", () => {
+  const withPosts: DispatchContext = {
+    ...ctx,
+    posts: [
+      { slug: "hello-world", title: "Hello", date: "2026-03-12", excerpt: "" },
+    ],
+  };
+
+  it("known slug returns PostPreview", () => {
+    expect(dispatchCommand(parseInput("cat writing/hello-world.md"), withPosts)).toEqual({
+      kind: "component",
+      name: "PostPreview",
+      props: { slug: "hello-world" },
+    });
+  });
+
+  it("unknown slug returns 'No such file or directory'", () => {
+    expect(dispatchCommand(parseInput("cat writing/bogus.md"), withPosts)).toEqual({
+      kind: "text",
+      text: "cat: writing/bogus.md: No such file or directory",
+    });
+  });
+});
+
 describe("dispatchCommand — ls projects/ and ls writing/", () => {
   const withContent: DispatchContext = {
     ...ctx,
