@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onBeforeUnmount } from "vue";
 import SectionReveal from "~/components/primitives/SectionReveal.vue";
+import SectionKicker from "~/components/primitives/SectionKicker.vue";
 import { useReveal } from "~/composables/useReveal";
 import { useMotionStore } from "~/stores/motion";
 import { storeToRefs } from "pinia";
@@ -127,7 +128,7 @@ const currentScene = computed(() => scenes[sceneIndex.value]!);
   <SectionReveal class="max-w-[1280px] mx-auto px-8 py-20">
     <div class="flex items-baseline justify-between mb-10">
       <div>
-        <div class="font-mono text-[var(--text-mono)] text-[var(--accent)] mb-2 tracking-[0.2em] uppercase">$ ./resume</div>
+        <SectionKicker command="./resume" />
         <h2 class="text-[var(--text-display-l)] font-display font-semibold tracking-[-0.03em]">interactive résumé</h2>
       </div>
       <NuxtLink to="/resume" class="font-mono text-[var(--text-mono)] text-[var(--text-muted)] hover:text-[var(--accent)]">launch terminal →</NuxtLink>
