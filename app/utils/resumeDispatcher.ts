@@ -78,7 +78,8 @@ const handlers: Record<string, Handler> = {
 };
 
 function unknown(parsed: ParsedCommand): OutputEntry {
-  return { kind: "text", text: `command not found: ${parsed.cmd || parsed.raw}. try 'help'.` };
+  const name = parsed.cmd || parsed.raw.trim();
+  return { kind: "text", text: `bash: ${name}: command not found` };
 }
 
 export function dispatchCommand(parsed: ParsedCommand, ctx: DispatchContext): OutputEntry {

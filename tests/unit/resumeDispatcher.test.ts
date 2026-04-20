@@ -91,10 +91,10 @@ describe("dispatchCommand — existing commands", () => {
     expect(dispatchCommand(parseInput("pdf"), ctx)).toEqual({ kind: "print" });
   });
 
-  it("unknown → text (bash format comes in Task 6 — for now: old format)", () => {
+  it("unknown → bash-style 'command not found'", () => {
     expect(dispatchCommand(parseInput("foobar"), ctx)).toEqual({
       kind: "text",
-      text: "command not found: foobar. try 'help'.",
+      text: "bash: foobar: command not found",
     });
   });
 
