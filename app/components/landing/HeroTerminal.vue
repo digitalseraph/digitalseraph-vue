@@ -7,6 +7,9 @@ import { useMotionStore } from "~/stores/motion";
 import { useTyping } from "~/composables/useTyping";
 import { storeToRefs } from "pinia";
 import YearsCounter from "./YearsCounter.vue";
+import { useScrollY } from "~/composables/useScrollY";
+
+const scrollY = useScrollY();
 
 const motion = useMotionStore();
 const { reduced } = storeToRefs(motion);
@@ -117,8 +120,14 @@ watch(() => subtitleTyping.done.value, (d) => {
         </div>
       </div>
     </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[var(--text-mono)] text-[var(--text-dim)] tracking-[0.2em] uppercase">
-      ↓ scroll
+    <div
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[var(--text-mono)] text-[var(--text-dim)] tracking-[0.2em] uppercase pointer-events-none scroll-hint"
+      :class="[
+        subtitleRevealed ? 'opacity-100' : 'opacity-0',
+        scrollY > 100 ? '!opacity-0' : '',
+      ]"
+    >
+      <span class="inline-block scroll-arrow">↓</span> scroll
     </div>
   </section>
 </template>
@@ -164,5 +173,19 @@ watch(() => subtitleTyping.done.value, (d) => {
 .cursor-blink { animation: cursor-blink 1.1s infinite; }
 @media (prefers-reduced-motion: reduce) {
   .cursor-blink { animation: none; opacity: 1; }
+}
+
+.scroll-hint {
+  transition: opacity 400ms ease-out;
+}
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+.scroll-arrow {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-arrow { animation: none; }
 }
 </style>
