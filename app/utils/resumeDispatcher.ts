@@ -8,7 +8,8 @@ export type OutputComponentName =
   | "ContactBlock"
   | "HelpBlock"
   | "DirectoryListing"
-  | "ProjectPreview";
+  | "ProjectPreview"
+  | "PostPreview";
 
 export type OutputEntry =
   | { kind: "text"; text: string }
