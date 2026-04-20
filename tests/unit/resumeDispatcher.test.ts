@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { dispatchCommand, normalizeCommand } from "~/utils/resumeDispatcher";
+import { describe, it, expect } from "vitest";
+import { parseInput, dispatchCommand, type DispatchContext } from "~/utils/resumeDispatcher";
 import type { Resume } from "~/types/resume";
 
 const resume: Resume = {
@@ -12,54 +12,93 @@ const resume: Resume = {
   contact: { email: "a@b", github: "gh", linkedin: "li" },
 };
 
-describe("normalizeCommand", () => {
-  it("lowercases and trims", () => {
-    expect(normalizeCommand("  Cat Summary.md  ")).toBe("cat summary.md");
+const ctx: DispatchContext = {
+  resume,
+  projects: [],
+  posts: [],
+  themeMode: "dark",
+  prompt: { user: "user12345" },
+};
+
+describe("parseInput", () => {
+  it("returns an empty-cmd ParsedCommand for blank input", () => {
+    expect(parseInput("")).toEqual({ cmd: "", args: [], raw: "" });
+    expect(parseInput("   ")).toEqual({ cmd: "", args: [], raw: "" });
   });
-  it("collapses internal whitespace", () => {
-    expect(normalizeCommand("ls   skills/")).toBe("ls skills/");
+
+  it("lowercases the cmd and preserves args case", () => {
+    expect(parseInput("Echo Hello World")).toEqual({
+      cmd: "echo", args: ["Hello", "World"], raw: "Echo Hello World",
+    });
+  });
+
+  it("collapses internal whitespace in args", () => {
+    expect(parseInput("echo a   b  c")).toEqual({
+      cmd: "echo", args: ["a", "b", "c"], raw: "echo a   b  c",
+    });
+  });
+
+  it("keeps multi-token commands that are actually cmd + args", () => {
+    expect(parseInput("cat summary.md")).toEqual({
+      cmd: "cat", args: ["summary.md"], raw: "cat summary.md",
+    });
+  });
+
+  it("preserves the raw input verbatim (no trim) except for empty detection", () => {
+    expect(parseInput("cat summary.md").raw).toBe("cat summary.md");
   });
 });
 
-describe("dispatchCommand", () => {
-  it("dispatches whoami to a component entry", () => {
-    expect(dispatchCommand("whoami", resume)).toEqual({ kind: "component", name: "WhoamiBlock" });
+describe("dispatchCommand — existing commands", () => {
+  it("empty cmd → null", () => {
+    expect(dispatchCommand(parseInput(""), ctx)).toBeNull();
   });
-  it("dispatches cat summary.md to a text entry with the resume summary", () => {
-    expect(dispatchCommand("cat summary.md", resume)).toEqual({ kind: "text", text: "fake summary" });
+
+  it("whoami → WhoamiBlock", () => {
+    expect(dispatchCommand(parseInput("whoami"), ctx)).toEqual({ kind: "component", name: "WhoamiBlock" });
   });
-  it("dispatches cat experience.md to ExperienceList", () => {
-    expect(dispatchCommand("cat experience.md", resume)).toEqual({ kind: "component", name: "ExperienceList" });
+
+  it("cat summary.md → text with resume summary", () => {
+    expect(dispatchCommand(parseInput("cat summary.md"), ctx)).toEqual({ kind: "text", text: "fake summary" });
   });
-  it("dispatches ls skills/ to SkillsGrid", () => {
-    expect(dispatchCommand("ls skills/", resume)).toEqual({ kind: "component", name: "SkillsGrid" });
+
+  it("cat experience.md → ExperienceList", () => {
+    expect(dispatchCommand(parseInput("cat experience.md"), ctx)).toEqual({ kind: "component", name: "ExperienceList" });
   });
-  it("dispatches cat education.md to EducationBlock", () => {
-    expect(dispatchCommand("cat education.md", resume)).toEqual({ kind: "component", name: "EducationBlock" });
+
+  it("ls skills/ → SkillsGrid", () => {
+    expect(dispatchCommand(parseInput("ls skills/"), ctx)).toEqual({ kind: "component", name: "SkillsGrid" });
   });
-  it("dispatches contact to ContactBlock", () => {
-    expect(dispatchCommand("contact", resume)).toEqual({ kind: "component", name: "ContactBlock" });
+
+  it("cat education.md → EducationBlock", () => {
+    expect(dispatchCommand(parseInput("cat education.md"), ctx)).toEqual({ kind: "component", name: "EducationBlock" });
   });
-  it("dispatches help and ? to HelpBlock", () => {
-    expect(dispatchCommand("help", resume)).toEqual({ kind: "component", name: "HelpBlock" });
-    expect(dispatchCommand("?", resume)).toEqual({ kind: "component", name: "HelpBlock" });
+
+  it("contact → ContactBlock", () => {
+    expect(dispatchCommand(parseInput("contact"), ctx)).toEqual({ kind: "component", name: "ContactBlock" });
   });
-  it("dispatches clear to a clear entry", () => {
-    expect(dispatchCommand("clear", resume)).toEqual({ kind: "clear" });
+
+  it("help and ? → HelpBlock", () => {
+    expect(dispatchCommand(parseInput("help"), ctx)).toEqual({ kind: "component", name: "HelpBlock" });
+    expect(dispatchCommand(parseInput("?"), ctx)).toEqual({ kind: "component", name: "HelpBlock" });
   });
-  it("dispatches pdf to null and calls window.print", () => {
-    const printSpy = vi.fn();
-    vi.stubGlobal("window", { print: printSpy });
-    expect(dispatchCommand("pdf", resume)).toBeNull();
-    expect(printSpy).toHaveBeenCalledOnce();
+
+  it("clear → clear kind", () => {
+    expect(dispatchCommand(parseInput("clear"), ctx)).toEqual({ kind: "clear" });
   });
-  it("returns a text entry for unknown commands", () => {
-    expect(dispatchCommand("foobar", resume)).toEqual({
+
+  it("pdf → print kind (no direct window.print call)", () => {
+    expect(dispatchCommand(parseInput("pdf"), ctx)).toEqual({ kind: "print" });
+  });
+
+  it("unknown → text (bash format comes in Task 6 — for now: old format)", () => {
+    expect(dispatchCommand(parseInput("foobar"), ctx)).toEqual({
       kind: "text",
       text: "command not found: foobar. try 'help'.",
     });
   });
-  it("normalizes before dispatching", () => {
-    expect(dispatchCommand("  CAT Summary.md ", resume)).toEqual({ kind: "text", text: "fake summary" });
+
+  it("accepts input in any case (cmd is normalized)", () => {
+    expect(dispatchCommand(parseInput("CAT Summary.md"), ctx)).toEqual({ kind: "text", text: "fake summary" });
   });
 });
