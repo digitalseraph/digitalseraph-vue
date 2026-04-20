@@ -7,7 +7,8 @@ export type OutputComponentName =
   | "EducationBlock"
   | "ContactBlock"
   | "HelpBlock"
-  | "DirectoryListing";
+  | "DirectoryListing"
+  | "ProjectPreview";
 
 export type OutputEntry =
   | { kind: "text"; text: string }
