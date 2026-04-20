@@ -31,6 +31,14 @@ export default defineNuxtConfig({
         { name: "description", content: "David Miller — engineer, builder, maker." },
       ],
       link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+      script: [
+        {
+          // Runs before hydration to match the theme store's init logic.
+          // Prevents the dark→light flash for users who've selected light mode.
+          innerHTML: `(function(){try{var s=localStorage.getItem("ds-theme");if(s==="light"||(s===null&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches)){document.documentElement.setAttribute("data-theme","light")}}catch(e){}})();`,
+          tagPosition: "head",
+        },
+      ],
     },
   },
 
