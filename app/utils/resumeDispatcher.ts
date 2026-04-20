@@ -63,6 +63,18 @@ const handlers: Record<string, Handler> = {
   "?": () => ({ kind: "component", name: "HelpBlock" }),
   clear: () => ({ kind: "clear" }),
   pdf: () => ({ kind: "print" }),
+  date: () => ({
+    kind: "text",
+    text: new Date().toLocaleDateString("en-US", {
+      weekday: "short", month: "short", day: "numeric", year: "numeric",
+    }),
+  }),
+  uname: (parsed) => {
+    if (parsed.args[0] === "-a") {
+      return { kind: "text", text: "digitalseraph 1.0 (Vue 3, Nuxt 4, Cloudflare Workers)" };
+    }
+    return { kind: "text", text: "digitalseraph" };
+  },
   cat: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "summary.md") return { kind: "text", text: ctx.resume.summary };
