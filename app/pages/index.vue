@@ -2,6 +2,7 @@
 import HeroTerminal from "~/components/landing/HeroTerminal.vue";
 import AboutTeaser from "~/components/landing/AboutTeaser.vue";
 import FeaturedWork from "~/components/landing/FeaturedWork.vue";
+import ResumeTeaser from "~/components/landing/ResumeTeaser.vue";
 import WritingTeaser from "~/components/landing/WritingTeaser.vue";
 import ContactCta from "~/components/landing/ContactCta.vue";
 
@@ -15,6 +16,7 @@ useHead({
   <HeroTerminal />
   <AboutTeaser />
   <FeaturedWork />
+  <ResumeTeaser />
   <WritingTeaser />
   <ContactCta />
 </template>
