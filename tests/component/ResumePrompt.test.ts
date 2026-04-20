@@ -55,3 +55,43 @@ describe("ResumePrompt — history navigation", () => {
     expect(current).toBe("");
   });
 });
+
+describe("ResumePrompt — Tab completion", () => {
+  it("Tab with a single matching command completes the input", async () => {
+    let current = "who";
+    const wrapper = await mountSuspended(ResumePrompt, {
+      props: {
+        modelValue: "who",
+        history: [],
+        commands: ["whoami", "help"],
+        projectSlugs: [],
+        postSlugs: [],
+        "onUpdate:modelValue": (v: string) => { current = v; },
+      },
+    });
+    const input = wrapper.find("input");
+    await input.trigger("keydown", { key: "Tab" });
+    expect(current).toBe("whoami");
+  });
+
+  it("Tab with multiple matches emits candidates and leaves input alone", async () => {
+    let current = "c";
+    const candidates: string[][] = [];
+    const wrapper = await mountSuspended(ResumePrompt, {
+      props: {
+        modelValue: "c",
+        history: [],
+        commands: ["cat summary.md", "contact", "clear"],
+        projectSlugs: [],
+        postSlugs: [],
+        "onUpdate:modelValue": (v: string) => { current = v; },
+        "onCandidates": (v: string[]) => { candidates.push(v); },
+      },
+    });
+    const input = wrapper.find("input");
+    await input.trigger("keydown", { key: "Tab" });
+    expect(current).toBe("c");
+    expect(candidates.length).toBe(1);
+    expect(candidates[0]).toEqual(expect.arrayContaining(["cat summary.md", "contact", "clear"]));
+  });
+});

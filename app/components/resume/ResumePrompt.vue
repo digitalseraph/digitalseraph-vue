@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, toRef } from "vue";
 import { useTerminalHistory } from "~/composables/useTerminalHistory";
+import { getCompletions } from "~/utils/tabComplete";
 
 const props = defineProps<{
   modelValue: string;
@@ -44,6 +45,20 @@ function onKey(e: KeyboardEvent) {
     e.preventDefault();
     nav.down();
     emit("update:modelValue", nav.currentEntry.value ?? "");
+    return;
+  }
+  if (e.key === "Tab") {
+    e.preventDefault();
+    const { completion, candidates } = getCompletions(props.modelValue, {
+      commands: props.commands ?? [],
+      projects: props.projectSlugs ?? [],
+      posts: props.postSlugs ?? [],
+    });
+    if (completion !== null) {
+      emit("update:modelValue", completion);
+    } else if (candidates.length > 0) {
+      emit("candidates", candidates);
+    }
     return;
   }
 }
