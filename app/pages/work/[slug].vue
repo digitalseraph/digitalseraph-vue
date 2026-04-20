@@ -40,7 +40,15 @@ useArrowNav({
   },
 });
 
-useHead(() => ({ title: project.value ? `${project.value.title} — digitalseraph` : "digitalseraph" }));
+useSeoMeta({
+  title: () => project.value ? `${project.value.title} — digitalseraph` : "digitalseraph",
+  description: () => project.value?.summary ?? "",
+  ogTitle: () => project.value ? `${project.value.title} — digitalseraph` : "digitalseraph",
+  ogDescription: () => project.value?.summary ?? "",
+  ogImage: () => project.value?.cover ? `https://digitalseraph.com${project.value.cover}` : "https://digitalseraph.com/og/site.svg",
+  ogType: "article",
+  twitterCard: "summary_large_image",
+});
 </script>
 
 <template>
