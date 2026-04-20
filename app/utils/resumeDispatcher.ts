@@ -6,7 +6,8 @@ export type OutputComponentName =
   | "SkillsGrid"
   | "EducationBlock"
   | "ContactBlock"
-  | "HelpBlock";
+  | "HelpBlock"
+  | "DirectoryListing";
 
 export type OutputEntry =
   | { kind: "text"; text: string }

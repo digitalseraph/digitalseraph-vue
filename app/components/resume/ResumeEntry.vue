@@ -7,6 +7,7 @@ import SkillsGrid from "./outputs/SkillsGrid.vue";
 import EducationBlock from "./outputs/EducationBlock.vue";
 import ContactBlock from "./outputs/ContactBlock.vue";
 import HelpBlock from "./outputs/HelpBlock.vue";
+import DirectoryListing from "./outputs/DirectoryListing.vue";
 import type { OutputComponentName, OutputEntry } from "~/utils/resumeDispatcher";
 
 const props = defineProps<{
@@ -21,16 +22,21 @@ const outputMap: Record<OutputComponentName, Component> = {
   EducationBlock,
   ContactBlock,
   HelpBlock,
+  DirectoryListing,
 };
 
 const component = computed(() =>
   props.output?.kind === "component" ? outputMap[props.output.name] ?? null : null
 );
+
+const componentProps = computed(() =>
+  props.output?.kind === "component" ? (props.output.props ?? {}) : {}
+);
 </script>
 
 <template>
   <div class="mb-4">
-    <div class="flex items-baseline gap-2 mb-2">
+    <div v-if="input" class="flex items-baseline gap-2 mb-2">
       <span class="text-[var(--accent)] select-none">$</span>
       <span class="text-[var(--text)]">{{ input }}</span>
     </div>
@@ -38,7 +44,7 @@ const component = computed(() =>
       <template v-if="output?.kind === 'text'">
         <span class="whitespace-pre-wrap">{{ output.text }}</span>
       </template>
-      <component v-else-if="component" :is="component" />
+      <component v-else-if="component" :is="component" v-bind="componentProps" />
     </div>
   </div>
 </template>
