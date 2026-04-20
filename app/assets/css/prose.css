@@ -117,3 +117,34 @@
   overflow-x: auto;
   max-width: 100%;
 }
+
+/* Copy-link affordance on h2/h3 inside prose. The heading itself is clickable
+   (wired via useHeadingAnchors); the ::before pseudo-element is purely visual. */
+.prose :is(h2, h3) {
+  position: relative;
+  cursor: pointer;
+}
+
+.prose :is(h2, h3)::before {
+  content: "#";
+  position: absolute;
+  left: -1.5ch;
+  color: var(--text-dim);
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+  font-weight: 400;
+  pointer-events: none;
+}
+
+.prose :is(h2, h3):hover::before,
+.prose :is(h2, h3):focus-visible::before {
+  opacity: 1;
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  /* Hide the leading # on mobile — not enough horizontal room */
+  .prose :is(h2, h3)::before {
+    display: none;
+  }
+}
