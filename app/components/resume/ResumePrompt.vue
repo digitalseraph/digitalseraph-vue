@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, toRef } from "vue";
+import { useTerminalHistory } from "~/composables/useTerminalHistory";
 
 const props = defineProps<{
   modelValue: string;
@@ -19,6 +20,9 @@ const emit = defineEmits<{
 
 const inputEl = ref<HTMLInputElement | null>(null);
 
+const historyRef = toRef(() => props.history ?? []);
+const nav = useTerminalHistory(historyRef);
+
 function focus() {
   inputEl.value?.focus();
 }
@@ -26,7 +30,21 @@ function focus() {
 function onKey(e: KeyboardEvent) {
   if (e.key === "Enter") {
     e.preventDefault();
+    nav.reset();
     emit("submit", props.modelValue);
+    return;
+  }
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+    nav.up();
+    emit("update:modelValue", nav.currentEntry.value ?? "");
+    return;
+  }
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    nav.down();
+    emit("update:modelValue", nav.currentEntry.value ?? "");
+    return;
   }
 }
 
