@@ -151,3 +151,19 @@ describe("dispatchCommand — echo", () => {
     }
   });
 });
+
+describe("dispatchCommand — sudo", () => {
+  it("sudo returns the canonical 'not in sudoers' message with the user's name", () => {
+    expect(dispatchCommand(parseInput("sudo reboot"), ctx)).toEqual({
+      kind: "text",
+      text: "user12345 is not in the sudoers file.  This incident will be reported.",
+    });
+  });
+
+  it("sudo with no args still renders the message", () => {
+    expect(dispatchCommand(parseInput("sudo"), ctx)).toEqual({
+      kind: "text",
+      text: "user12345 is not in the sudoers file.  This incident will be reported.",
+    });
+  });
+});
