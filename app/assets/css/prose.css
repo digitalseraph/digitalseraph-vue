@@ -81,3 +81,39 @@
   font-style: italic;
   color: var(--text-muted);
 }
+
+/* Typography polish for long-form reading. Applies only to .prose content. */
+.prose {
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+.prose p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 0.9;
+  font-weight: 600;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  color: var(--accent);
+}
+
+/* Never apply drop caps to anything inside a code block or heading */
+.prose :is(pre, code, h1, h2, h3, h4, h5, h6) p:first-of-type::first-letter {
+  float: none;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+/* Long URL / inline-code wrapping for narrow viewports */
+.prose code:not(pre code) {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.prose pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
