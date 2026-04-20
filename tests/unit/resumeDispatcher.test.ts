@@ -272,6 +272,85 @@ describe("dispatchCommand — cat writing/<slug>.md", () => {
   });
 });
 
+describe("dispatchCommand — grep", () => {
+  const withContent: DispatchContext = {
+    ...ctx,
+    resume: {
+      ...resume,
+      experience: [
+        {
+          role: "Dev", company: "Cox", location: "Atlanta",
+          start: "2021-05", end: "present",
+          bullets: ["Led the Vue 3 migration"],
+          tech: [],
+        },
+      ],
+      skills: [{ group: "Languages", items: ["TypeScript", "PHP"] }],
+    },
+    projects: [
+      { slug: "01-jump", title: "Jump", year: 2026, stack: ["Vue 3"], summary: "URL shortener" },
+    ],
+    posts: [
+      { slug: "hello-world", title: "Hello", date: "2026-03-12", excerpt: "about Vue" },
+    ],
+  };
+
+  it("grep with no args returns usage text", () => {
+    expect(dispatchCommand(parseInput("grep"), withContent)).toEqual({
+      kind: "text",
+      text: "grep: missing search term. usage: grep <term>",
+    });
+  });
+
+  it("grep with no matches returns GrepResults with empty matches", () => {
+    const r = dispatchCommand(parseInput("grep zzz-nothing"), withContent);
+    expect(r?.kind).toBe("component");
+    if (r?.kind === "component") {
+      expect(r.name).toBe("GrepResults");
+      const props = r.props as { term: string; matches: unknown[] };
+      expect(props.term).toBe("zzz-nothing");
+      expect(props.matches).toEqual([]);
+    }
+  });
+
+  it("grep matches across experience bullets, skills, projects, and posts", () => {
+    const r = dispatchCommand(parseInput("grep Vue"), withContent);
+    expect(r?.kind).toBe("component");
+    if (r?.kind === "component") {
+      const { matches } = r.props as {
+        matches: Array<{ source: string; snippet: string; link?: string }>;
+      };
+      expect(matches.map((m) => m.source)).toEqual([
+        "experience/Cox/0",
+        "projects/01-jump",
+        "writing/hello-world",
+      ]);
+      expect(matches.find((m) => m.source === "projects/01-jump")?.link).toBe("/work/01-jump");
+      expect(matches.find((m) => m.source === "writing/hello-world")?.link).toBe("/writing/hello-world");
+    }
+  });
+
+  it("grep is case-insensitive", () => {
+    const r = dispatchCommand(parseInput("grep vue"), withContent);
+    if (r?.kind === "component") {
+      const { matches } = r.props as { matches: Array<{ source: string }> };
+      expect(matches.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("grep joins multiple args into a single term", () => {
+    const r = dispatchCommand(parseInput("grep URL shortener"), withContent);
+    if (r?.kind === "component") {
+      const { term, matches } = r.props as {
+        term: string;
+        matches: Array<{ source: string }>;
+      };
+      expect(term).toBe("URL shortener");
+      expect(matches.some((m) => m.source === "projects/01-jump")).toBe(true);
+    }
+  });
+});
+
 describe("dispatchCommand — ls projects/ and ls writing/", () => {
   const withContent: DispatchContext = {
     ...ctx,

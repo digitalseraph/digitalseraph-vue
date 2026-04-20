@@ -131,6 +131,53 @@ const handlers: Record<string, Handler> = {
 
     return unknown(parsed);
   },
+  grep: (parsed, ctx) => {
+    const term = parsed.args.join(" ");
+    if (term === "") {
+      return { kind: "text", text: "grep: missing search term. usage: grep <term>" };
+    }
+    const needle = term.toLowerCase();
+    const matches: GrepMatch[] = [];
+
+    for (const role of ctx.resume.experience) {
+      role.bullets.forEach((bullet, i) => {
+        if (bullet.toLowerCase().includes(needle)) {
+          matches.push({ source: `experience/${role.company}/${i}`, snippet: bullet });
+        }
+      });
+    }
+
+    for (const group of ctx.resume.skills) {
+      for (const item of group.items) {
+        if (item.toLowerCase().includes(needle)) {
+          matches.push({ source: `skills/${group.group}/${item}`, snippet: item });
+        }
+      }
+    }
+
+    for (const p of ctx.projects) {
+      const stackHit = p.stack.some((s) => s.toLowerCase().includes(needle));
+      if (p.title.toLowerCase().includes(needle) || p.summary.toLowerCase().includes(needle) || stackHit) {
+        matches.push({
+          source: `projects/${p.slug}`,
+          snippet: `${p.title} — ${p.summary}`,
+          link: `/work/${p.slug}`,
+        });
+      }
+    }
+
+    for (const p of ctx.posts) {
+      if (p.title.toLowerCase().includes(needle) || p.excerpt.toLowerCase().includes(needle)) {
+        matches.push({
+          source: `writing/${p.slug}`,
+          snippet: `${p.title} — ${p.excerpt}`,
+          link: `/writing/${p.slug}`,
+        });
+      }
+    }
+
+    return { kind: "component", name: "GrepResults", props: { term, matches } };
+  },
   ls: (parsed, ctx) => {
     const path = (parsed.args[0] ?? "").toLowerCase();
     if (path === "") {
