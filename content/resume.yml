@@ -24,8 +24,8 @@ experience:
     start: 2021-05
     end: present
     bullets:
-      - Lead engineer on Jump, Cox's internal URL shortener platform — led the Vue 2 → Vue 3 rewrite (Vite + Pinia) with a team of three, migrated production from Rancher onto Google Anthos GKE, and stood up the complete test harness (Vitest, vitest-browser, Playwright, SonarQube quality gates) that did not exist prior.
-      - Shipped Vue 3 SPAs and reusable Storybook component libraries adopted across the broader engineering organization.
+      - Lead engineer on Jump, Cox's internal URL shortener platform — led the Vue 2 → Vue 3 rewrite (Vite + Pinia) as part of a three-person team with a UI/UX designer, migrated production from Rancher onto Google Anthos GKE, and stood up the complete test harness (Vitest, vitest-browser, Playwright, SonarQube quality gates) that did not exist prior.
+      - Led development of a Vue Storybook component library (~40 components) for the Adobe XD → Storybook → Vue design-to-development workflow.
       - Built the Buzz Project Management Application end-to-end — SharePoint and Jira API integrations delivering high-level analytics and project tracking dashboards for cross-functional teams.
       - Engineered the Outages Application, consolidating real-time service and outage data from SharePoint and New Relic into a single monitoring dashboard.
       - Architected automated business workflows and approval pipelines in Microsoft Power Automate and Azure, streamlining the Adobe XD → Storybook → Vue.js design-to-development handoff.
