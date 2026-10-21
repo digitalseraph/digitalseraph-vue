@@ -1,0 +1,2 @@
+# Force LF everywhere so the NTFS mount / Windows tools can't introduce CRLF churn
+* text=auto eol=lf
