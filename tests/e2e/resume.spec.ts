@@ -18,7 +18,8 @@ test.describe("résumé terminal", () => {
 
   test("sidebar click runs cat experience.md and renders all roles", async ({ page }) => {
     await page.goto("/resume");
-    await page.waitForTimeout(1200);
+    // Wait for the intro to finish; a fixed wait lets the click race it on slow CI.
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
     await page
       .locator("nav button")
       .filter({ hasText: "cat experience.md" })
