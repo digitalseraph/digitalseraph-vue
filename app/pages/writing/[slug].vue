@@ -58,7 +58,7 @@ useHead(() => ({
             headline: post.value.title,
             datePublished: post.value.date,
             dateModified: post.value.date,
-            description: post.value.excerpt,
+            description: post.value.description,
             author: {
               "@type": "Person",
               name: "David Miller",
@@ -79,9 +79,9 @@ useHead(() => ({
 
 useSeoMeta({
   title: () => post.value ? `${post.value.title} — digitalseraph` : "digitalseraph",
-  description: () => post.value?.excerpt ?? "",
+  description: () => post.value?.description ?? "",
   ogTitle: () => post.value ? `${post.value.title} — digitalseraph` : "digitalseraph",
-  ogDescription: () => post.value?.excerpt ?? "",
+  ogDescription: () => post.value?.description ?? "",
   ogImage: "https://digitalseraph.com/og/writing.svg",
   ogType: "article",
   twitterCard: "summary_large_image",
