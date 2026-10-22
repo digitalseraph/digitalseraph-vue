@@ -11,8 +11,6 @@ const terminal = (page: import("@playwright/test").Page) =>
 test.describe("résumé terminal", () => {
   test("auto-types whoami intro on load", async ({ page }) => {
     await page.goto("/resume");
-    // Give the intro time to complete (~6 chars × 45ms ≈ 270ms + breath 150ms)
-    await page.waitForTimeout(1200);
     await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
   });
 
@@ -53,19 +51,17 @@ test.describe("résumé terminal", () => {
 
   test("clear empties the buffer", async ({ page }) => {
     await page.goto("/resume");
-    await page.waitForTimeout(1200);
-    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
     // The intro whoami entry is in the buffer
     await expect(terminal(page).getByText(/David Miller/).first()).toBeVisible();
+    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
     await input.fill("clear");
     await input.press("Enter");
-    await page.waitForTimeout(100);
     await expect(terminal(page).getByText(/David Miller/)).toHaveCount(0);
   });
 
   test("print view is the only visible content under print media", async ({ page }) => {
     await page.goto("/resume");
-    await page.waitForTimeout(1200);
+    await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
     await page.emulateMedia({ media: "print" });
     // Nav should be hidden
     await expect(page.locator("nav").first()).toBeHidden();
@@ -76,8 +72,6 @@ test.describe("résumé terminal", () => {
   test("reduced motion collapses typing instantly", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/resume");
-    // No 1200ms wait — intro should be instant
-    await page.waitForTimeout(400);
     await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
   });
 
@@ -133,11 +127,16 @@ test.describe("résumé terminal", () => {
     // Tip appears after intro
     await expect(terminal(page).getByText(/tip: type 'help'/)).toBeVisible();
 
-    // Reload — tip should NOT reappear (sessionStorage persists across reloads in same tab)
+    // Reload — tip should NOT reappear (sessionStorage persists across reloads in same tab).
+    // Reduced motion drops the tip delay to 0, so any tip would land before the
+    // output of a command run after the intro.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.reload();
     await expect(terminal(page).getByText("David Miller", { exact: false })).toBeVisible();
-    // Wait past the delay the tip would have appeared at (400ms after intro)
-    await page.waitForTimeout(1000);
+    const input = page.getByRole("textbox", { name: /resume terminal prompt/i });
+    await input.fill("contact");
+    await input.press("Enter");
+    await expect(terminal(page).getByText("hello@digitalseraph.com").first()).toBeVisible();
     await expect(terminal(page).getByText(/tip: type 'help'/)).toHaveCount(0);
   });
 });
