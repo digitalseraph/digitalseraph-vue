@@ -39,6 +39,15 @@ test("writing index lists seeded posts", async ({ page }) => {
   await page.goto("/writing");
   await expect(page.getByRole("heading", { name: "writing" })).toBeVisible();
   await expect(page.getByText("On craft and compromise")).toBeVisible();
+  await expect(page.getByText("A short meditation on when to polish")).toBeVisible();
+});
+
+test("writing post has a non-empty meta description", async ({ page }) => {
+  await page.goto("/writing/2026-03-12-first-post");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    /A short meditation on when to polish/,
+  );
 });
 
 test("work detail page renders", async ({ page }) => {

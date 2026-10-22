@@ -51,7 +51,7 @@ useHead({
           :slug="stemToSlug(p.stem)"
           :title="p.title"
           :date="p.date"
-          :excerpt="p.excerpt"
+          :excerpt="p.description"
           :tags="p.tags"
           heading-level="h2"
         />

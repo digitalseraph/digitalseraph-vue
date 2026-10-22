@@ -143,7 +143,5 @@ Works cleanly and is aligned with Cloudflare's direction.
 ## Open threads (worth picking up later)
 
 - **Blog posts** — still two placeholder posts, never written
-- **`/resume` perf nudge** — currently 0.81 vs 0.90 warn threshold; could improve by deferring intro auto-type or optimizing hydration
 - **Bundle slim via hand-rolled content loader** — ~1.8 MiB savings available, non-trivial migration
 - **Cross-browser E2E** — Chromium-only today
-- **Light theme not user-exposed** — all theme tokens exist, the `data-theme="light"` mechanism works, but there's no UI toggle wired up yet

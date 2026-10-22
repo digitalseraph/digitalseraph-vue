@@ -48,7 +48,7 @@ const posts = computed<ResumePostRef[]>(() =>
     slug: p.stem.replace(/^writing\//, ""),
     title: p.title,
     date: p.date,
-    excerpt: p.excerpt,
+    excerpt: p.description,
   })),
 );
 

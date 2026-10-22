@@ -31,7 +31,7 @@ export default defineContentConfig({
         title: z.string(),
         date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "date must be YYYY-MM-DD"),
         tags: z.array(z.string()).default([]),
-        excerpt: z.string(),
+        description: z.string(),
         draft: z.boolean().default(false),
       }),
     }),

@@ -25,7 +25,7 @@ const { data: posts } = await useAsyncData("writing-teaser", () =>
         :slug="stemToSlug(p.stem)"
         :title="p.title"
         :date="p.date"
-        :excerpt="p.excerpt"
+        :excerpt="p.description"
       />
     </div>
   </SectionReveal>
