@@ -11,7 +11,7 @@ import {
   type OutputEntry,
   type DispatchContext,
   type ProjectRef,
-  type PostRef,
+  type ResumePostRef,
 } from "~/utils/resumeDispatcher";
 import ResumeBuffer from "./ResumeBuffer.vue";
 import ResumeEntry from "./ResumeEntry.vue";
@@ -43,7 +43,7 @@ const projects = computed<ProjectRef[]>(() =>
   })),
 );
 
-const posts = computed<PostRef[]>(() =>
+const posts = computed<ResumePostRef[]>(() =>
   (postsData.value ?? []).map((p) => ({
     slug: p.stem.replace(/^writing\//, ""),
     title: p.title,

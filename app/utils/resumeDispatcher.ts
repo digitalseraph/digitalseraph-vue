@@ -29,7 +29,7 @@ export interface ProjectRef {
   summary: string;
 }
 
-export interface PostRef {
+export interface ResumePostRef {
   slug: string;
   title: string;
   date: string;
@@ -45,7 +45,7 @@ export interface GrepMatch {
 export interface DispatchContext {
   resume: Resume;
   projects: ProjectRef[];
-  posts: PostRef[];
+  posts: ResumePostRef[];
   themeMode: "light" | "dark";
   prompt: { user: string };
 }
