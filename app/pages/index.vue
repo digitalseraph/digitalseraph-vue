@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import HeroTerminal from "~/components/landing/HeroTerminal.vue";
-import AboutTeaser from "~/components/landing/AboutTeaser.vue";
-import FeaturedWork from "~/components/landing/FeaturedWork.vue";
-import ResumeTeaser from "~/components/landing/ResumeTeaser.vue";
-import TechMarquee from "~/components/landing/TechMarquee.vue";
-import WritingTeaser from "~/components/landing/WritingTeaser.vue";
-import ContactCta from "~/components/landing/ContactCta.vue";
 
 useSeoMeta({
   title: "David Miller — digitalseraph.com",
@@ -20,10 +14,12 @@ useSeoMeta({
 
 <template>
   <HeroTerminal />
-  <AboutTeaser />
-  <FeaturedWork />
-  <ResumeTeaser />
-  <TechMarquee />
-  <WritingTeaser />
-  <ContactCta />
+  <!-- Below-the-fold sections render as static HTML and hydrate on scroll,
+       so their animations don't block the main thread during first load. -->
+  <LazyLandingAboutTeaser hydrate-on-visible />
+  <LazyLandingFeaturedWork hydrate-on-visible />
+  <LazyLandingResumeTeaser hydrate-on-visible />
+  <LazyLandingTechMarquee hydrate-on-visible />
+  <LazyLandingWritingTeaser hydrate-on-visible />
+  <LazyLandingContactCta hydrate-on-visible />
 </template>
